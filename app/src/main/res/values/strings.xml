@@ -1,0 +1,27 @@
+<resources>
+    <string name="app_name">Digital Quran</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="action_settings">Setting</string>
+    <string name="action_credit">Credits</string>
+    <string name="action_about_us">About Us</string>
+    <string name="action_rate">Rate us</string>
+
+    <string-array name="text_size">
+        <item>Select Text Size</item>
+        <item>Small</item>
+        <item>Normal</item>
+        <item>Large</item>
+        <item>Extra Large</item>
+    </string-array>
+    <string-array name="display_mode">
+        <item>Select Display Mode</item>
+        <item>Day Mode</item>
+        <item>Night Mode</item>
+    </string-array>
+    <string-array name="text_script">
+        <item>Select Script</item>
+        <item>Me Quran</item>
+        <item>PDMS Saleem</item>
+    </string-array>
+</resources>

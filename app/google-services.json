@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "607905462018",
+    "firebase_url": "https://digitalquran-dbe36.firebaseio.com",
+    "project_id": "digitalquran-dbe36",
+    "storage_bucket": "digitalquran-dbe36.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:607905462018:android:957bb3bed93cbcaa",
+        "android_client_info": {
+          "package_name": "com.horizontech.biz.digitalquran"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "607905462018-kv7uhvi801oh395jsc90ns7cf7lmpjtu.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.horizontech.biz.digitalquran",
+            "certificate_hash": "653c9b20cadea98fece905de270e5b59271eb4ca"
+          }
+        },
+        {
+          "client_id": "607905462018-8lk7da5unnnja779v5fps8akuch2hk9o.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD1P0XYbwKF_EdpOrVY7DSUtYSoGO2uLh8"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "607905462018-8lk7da5unnnja779v5fps8akuch2hk9o.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

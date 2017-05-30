@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:id="@+id/settingLayout"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#fff"
+    tools:context="com.horizontech.biz.digitalquran.Menu.SettingActivity">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="20dp">
+        <TextView
+            android:layout_width="160dp"
+            android:layout_height="50dp"
+            android:id="@+id/textsizetextview"
+            android:text="Text size :"
+            android:textSize="20sp"
+            android:padding="10dp"
+            android:textColor="@color/dayModTextColor"/>
+    <Spinner
+        android:id="@+id/text_size"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:padding="10dp"
+        android:entries="@array/text_size"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="20dp">
+        <TextView
+            android:layout_width="160dp"
+            android:layout_height="50dp"
+            android:text="Display Mode :"
+            android:textSize="20sp"
+            android:padding="10dp"
+            android:textColor="@color/dayModTextColor"/>
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:id="@+id/display_mode"
+            android:entries="@array/display_mode"
+            android:padding="10dp"/>
+    </LinearLayout>
+    <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:layout_marginTop="20dp">
+    <TextView
+        android:layout_width="160dp"
+        android:layout_height="50dp"
+        android:text="Text Script :"
+        android:textSize="20sp"
+        android:padding="10dp"
+        android:textColor="@color/dayModTextColor"/>
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:id="@+id/text_script"
+        android:padding="10dp"
+        android:entries="@array/text_script"/>
+</LinearLayout>
+    <Button
+        android:id="@+id/setting_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Save Setting"
+        android:layout_gravity="center"
+        android:background="@color/nightModBackgroundColor"
+        android:textColor="@color/dayModBackgroundColor"
+        android:padding="20dp"
+        android:layout_marginTop="20dp"/>
+</LinearLayout>

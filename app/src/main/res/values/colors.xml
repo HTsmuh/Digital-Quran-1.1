@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#788f2e</color>
+    <color name="colorPrimaryDark">#38500f</color>
+    <color name="colorAccent">#d2b07d</color>
+    <color name="colorBackground">#d2b07d</color>
+    <color name="dayModTextColor">#000</color>
+    <color name="dayModBackgroundColor">#ebfcdb</color>
+    <color name="dayModTranslationColor">#666665</color>
+    <color name="nightModTextColor">#fff</color>
+    <color name="nightModBackgroundColor">#38500f</color>
+    <color name="nightModTranslationColor">#ebfcdb</color>
+
+</resources>

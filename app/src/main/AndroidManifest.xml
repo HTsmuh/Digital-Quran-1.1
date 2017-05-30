@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.horizontech.biz.digitalquran">
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+
+        <activity
+            android:name=".SplashActivity"
+            android:theme="@style/SplashTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".Fragments.MainActivity" />
+        <activity
+            android:name=".SurahText"
+            android:theme="@style/DayMoodFullScreen" />
+        <activity
+            android:name=".ParaText"
+            android:theme="@style/NightMoodFullScreen" />
+        <activity
+            android:name=".Menu.SettingActivity"
+            android:label="Settings"
+            android:theme="@style/MyAppTheme" />
+        <activity
+            android:name=".Menu.CreditsActivity"
+            android:label="Credits"
+            android:theme="@style/MyAppTheme" />
+        <activity
+            android:name=".Menu.AboutUsActivity"
+            android:label="About Us"
+            android:theme="@style/MyAppTheme" />
+        <activity android:name=".CustomTranslation"/>
+    </application>
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+</manifest>
