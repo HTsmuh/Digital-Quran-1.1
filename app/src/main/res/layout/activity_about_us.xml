@@ -41,7 +41,9 @@
             <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Horizon Technologies Launched a Quranic project ........."
+            android:text="Beta version of our first Android app developed in house at Horizon Technologies.
+
+Initially the application displays Arabic text and its translation, future versions will have audio support and many additional features. INSHAALLAH!"
             android:textSize="20sp"
             android:padding="10dp"
             android:textColor="@color/colorPrimaryDark"/>

@@ -2,10 +2,9 @@
     <string name="app_name">Digital Quran</string>
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="action_settings">Setting</string>
+    <string name="action_settings">Settings</string>
     <string name="action_credit">Credits</string>
-    <string name="action_about_us">About Us</string>
-    <string name="action_rate">Rate us</string>
+    <string name="action_about_us">About</string>
 
     <string-array name="text_size">
         <item>Select Text Size</item>
