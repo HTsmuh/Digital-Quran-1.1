@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.Cursor;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class DbBackend extends DbObject {
 
@@ -13,7 +14,7 @@ public class DbBackend extends DbObject {
     public DbBackend(Context context) {
         super(context);
     }
-//Surah names
+    //Surah names
     public String[] surah_arabic() {
         String query = "Select * from Surah_Names";
         Cursor cursor = this.getDbConnection().rawQuery(query, null);
@@ -380,10 +381,13 @@ public class DbBackend extends DbObject {
         cursor.close();
         return script;
     }
-
     public void setScript(String script) {
         String query = "update User_Setting set text_script='"+script+"' where _id=1";
         db.execSQL(query);
         this.script = script;
+    }
+    public void insertINTObookmarkpara(String bookmark_para_no,String bookmark_aya_no,String bookmark_date){
+        String query = "INSERT INTO bookmark (para_no,aya_no,date) VALUES ('"+bookmark_para_no+"','"+bookmark_aya_no+"','"+bookmark_date+"')";
+        db.execSQL(query);
     }
 }

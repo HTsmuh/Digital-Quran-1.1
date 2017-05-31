@@ -67,7 +67,7 @@ public class SurahText extends AppCompatActivity {
         SurahTextList= (ListView) findViewById(R.id.surahtextlist);
 
         LayoutInflater inflater = getLayoutInflater();
-        header = (ViewGroup)inflater.inflate(R.layout.translation_header, SurahTextList , false);
+        header = (ViewGroup)inflater.inflate(R.layout.custom_translation_header, SurahTextList , false);
         SurahTextList .addHeaderView(header, null, false);
         SurahTextScroll= (ScrollView) findViewById(R.id.surahtextscroll);
         RelativeLayout relativeLayout = (RelativeLayout)findViewById(R.id.activity_surah_text);
@@ -135,13 +135,18 @@ public class SurahText extends AppCompatActivity {
                     translation.setText("HIDE TRANSLATION");
                     isTranslate=true;
                     dialog = new Dialog(context);
-                    dialog.setContentView(R.layout.activity_custom_translation);
+                    dialog.setContentView(R.layout.custom_translation);
                     dialog.setTitle("Select Language");
                     language_radiogroup= (RadioGroup) dialog.findViewById(R.id.language_radio);
                     radioButton_en= (RadioButton) dialog.findViewById(R.id.en_radio);
                     radioButton_ur= (RadioButton) dialog.findViewById(R.id.ur_radio);
                     dialogButton = (Button) dialog.findViewById(R.id.dialogButtonOK);
                     language_radiogroup.check(R.id.ur_radio);
+                    WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+                    lp.copyFrom(dialog.getWindow().getAttributes());
+                    lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+                    dialog.getWindow().setAttributes(lp);
+                    dialog.show();
                     // if button is clicked, close the custom dialog
                     dialogButton.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -157,12 +162,6 @@ public class SurahText extends AppCompatActivity {
                             }
                         }
                     });
-                    WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-                    lp.copyFrom(dialog.getWindow().getAttributes());
-                    lp.width = WindowManager.LayoutParams.MATCH_PARENT;
-                    dialog.show();
-                    dialog.getWindow().setAttributes(lp);
-                    dialog.show();
                     if (index==9){
                         header.findViewById(R.id.bismillah2).setVisibility(View.INVISIBLE);
                     }

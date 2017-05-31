@@ -21,11 +21,14 @@ import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.horizontech.biz.digitalquran.Adapter.TranslationAdapter;
 import com.horizontech.biz.digitalquran.Database.DbBackend;
 
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Date;
 
 public class ParaText extends AppCompatActivity {
 
@@ -37,6 +40,7 @@ public class ParaText extends AppCompatActivity {
     int num;
     int index;
     Button translation;
+    Button bookmark;
     ListView ParaTextList;
     boolean isTranslate=false;
     TranslationAdapter listAdapter_Eng;
@@ -68,9 +72,10 @@ public class ParaText extends AppCompatActivity {
         translation= (Button) findViewById(R.id.translate);
         ParaTextList= (ListView) findViewById(R.id.paratextlist);
         inflater = getLayoutInflater();
-        header = (ViewGroup)inflater.inflate(R.layout.translation_header, ParaTextList , false);
+        header = (ViewGroup)inflater.inflate(R.layout.custom_translation_header, ParaTextList , false);
         ParaTextList .addHeaderView(header, null, false);
         ParaTextScroll= (ScrollView) findViewById(R.id.paratextscroll);
+        bookmark= (Button) findViewById(R.id.bookmark);
 
         RelativeLayout relativeLayout = (RelativeLayout)findViewById(R.id.activity_para_text);
         Resources res = getResources();
@@ -126,6 +131,7 @@ public class ParaText extends AppCompatActivity {
         listAdapter_Eng = new TranslationAdapter(this,translation_text_Eng,arabic_text);
         listAdapter_Urdu = new TranslationAdapter(this,translation_text_Urdu,arabic_text);
         quranText.setText(finalize2);
+
         translation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -133,13 +139,20 @@ public class ParaText extends AppCompatActivity {
                     translation.setText("HIDE TRANSLATION");
                     isTranslate=true;
                     dialog = new Dialog(context);
-                    dialog.setContentView(R.layout.activity_custom_translation);
+                    dialog.setContentView(R.layout.custom_translation);
                     dialog.setTitle("Select Language");
+                    dialog.setCancelable(false);
                     language_radiogroup= (RadioGroup) dialog.findViewById(R.id.language_radio);
                     radioButton_en= (RadioButton) dialog.findViewById(R.id.en_radio);
                     radioButton_ur= (RadioButton) dialog.findViewById(R.id.ur_radio);
                     dialogButton = (Button) dialog.findViewById(R.id.dialogButtonOK);
                     language_radiogroup.check(R.id.ur_radio);
+                    WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+                    lp.copyFrom(dialog.getWindow().getAttributes());
+                    lp.width = WindowManager.LayoutParams.MATCH_PARENT;
+                    lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+                    dialog.getWindow().setAttributes(lp);
+                    dialog.show();
                     // if button is clicked, close the custom dialog
                     dialogButton.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -155,12 +168,6 @@ public class ParaText extends AppCompatActivity {
                             }
                         }
                     });
-                    WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-                    lp.copyFrom(dialog.getWindow().getAttributes());
-                    lp.width = WindowManager.LayoutParams.MATCH_PARENT;
-                    dialog.show();
-                    dialog.getWindow().setAttributes(lp);
-                    dialog.show();
 
                 }else{
                     translation.setText("SHOW TRANSLATION");
@@ -172,6 +179,17 @@ public class ParaText extends AppCompatActivity {
             }
 
 
+        });
+        bookmark.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MMM-dd");
+                SimpleDateFormat sdf2 = new SimpleDateFormat("HH:mm:ss");
+                String currentDateandTime1 = sdf1.format(new Date());
+                String currentDateandTime2 = sdf2.format(new Date());
+                String currentDateandTime = " on "+currentDateandTime1+" at "+currentDateandTime2;
+                Toast.makeText(context, "Bookmarked"+currentDateandTime, Toast.LENGTH_SHORT).show();
+            }
         });
     }
 }

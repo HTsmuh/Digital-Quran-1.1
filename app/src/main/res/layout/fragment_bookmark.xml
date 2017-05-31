@@ -4,12 +4,13 @@
     android:layout_height="match_parent"
     android:background="#fff"
     tools:context="com.horizontech.biz.digitalquran.Fragments.BookmarkFragment">
-
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="wrap_content"
+    <ListView
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Coming Soon"
-        android:layout_centerInParent="true"/>
-
+        android:id="@+id/bookmark_sura"/>
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/bookmark_sura"
+        android:id="@+id/bookmark_para"/>
 </RelativeLayout>

@@ -18,6 +18,7 @@
             android:id="@+id/textsizetextview"
             android:text="Text size :"
             android:textSize="20sp"
+            android:fontFamily="serif"
             android:padding="10dp"
             android:textColor="@color/dayModTextColor"/>
     <Spinner

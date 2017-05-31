@@ -27,7 +27,7 @@ public class SurahNameAdapter extends ArrayAdapter<String> {
     Typeface tf;
 
     public SurahNameAdapter(Context context, String[] surah_no, String[] surah_arabic, String[] surah_roman,String[] surah_verse, int[] surah_type) {
-        super(context, R.layout.activity_single_row,R.id.translationUrduText,surah_arabic);
+        super(context, R.layout.custom_single_row,R.id.translationUrduText,surah_arabic);
         this.context=context;
         this.surah_no_array=surah_no;
         this.surah_arabic_array=surah_arabic;
@@ -41,7 +41,7 @@ public class SurahNameAdapter extends ArrayAdapter<String> {
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         LayoutInflater inflater=(LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View row=inflater.inflate(R.layout.activity_single_row,parent,false);
+        View row=inflater.inflate(R.layout.custom_single_row,parent,false);
         TextView arabic= (TextView) row.findViewById(R.id.translationUrduText);
         TextView roman= (TextView) row.findViewById(R.id.translationArabicText);
         TextView number= (TextView) row.findViewById(R.id.text3);
