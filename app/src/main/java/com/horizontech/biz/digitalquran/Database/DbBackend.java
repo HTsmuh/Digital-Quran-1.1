@@ -11,6 +11,10 @@ public class DbBackend extends DbObject {
     private String size;
     private String mode;
     private String script;
+    private String bookmark_para_no;
+    private String bookmark_sura_no;
+    private String bookmark_aya_no;
+    private String bookmark_date;
     public DbBackend(Context context) {
         super(context);
     }
@@ -389,5 +393,39 @@ public class DbBackend extends DbObject {
     public void insertINTObookmarkpara(String bookmark_para_no,String bookmark_aya_no,String bookmark_date){
         String query = "INSERT INTO bookmark (para_no,aya_no,date) VALUES ('"+bookmark_para_no+"','"+bookmark_aya_no+"','"+bookmark_date+"')";
         db.execSQL(query);
+        this.bookmark_para_no=bookmark_para_no;
+        this.bookmark_aya_no=bookmark_aya_no;
+        this.bookmark_date=bookmark_date;
+    }
+    public String getBookmark_para_no() {
+        return bookmark_para_no;
+    }
+
+    public void setBookmark_para_no(String bookmark_para_no) {
+        this.bookmark_para_no = bookmark_para_no;
+    }
+
+    public String getBookmark_sura_no() {
+        return bookmark_sura_no;
+    }
+
+    public void setBookmark_sura_no(String bookmark_sura_no) {
+        this.bookmark_sura_no = bookmark_sura_no;
+    }
+
+    public String getBookmark_aya_no() {
+        return bookmark_aya_no;
+    }
+
+    public void setBookmark_aya_no(String bookmark_aya_no) {
+        this.bookmark_aya_no = bookmark_aya_no;
+    }
+
+    public String getBookmark_date() {
+        return bookmark_date;
+    }
+
+    public void setBookmark_date(String bookmark_date) {
+        this.bookmark_date = bookmark_date;
     }
 }

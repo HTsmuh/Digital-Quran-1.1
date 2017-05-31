@@ -188,7 +188,9 @@ public class ParaText extends AppCompatActivity {
                 String currentDateandTime1 = sdf1.format(new Date());
                 String currentDateandTime2 = sdf2.format(new Date());
                 String currentDateandTime = " on "+currentDateandTime1+" at "+currentDateandTime2;
-                Toast.makeText(context, "Bookmarked"+currentDateandTime, Toast.LENGTH_SHORT).show();
+                db.setBookmark_date(currentDateandTime);
+                db.setBookmark_para_no(String.valueOf(index));
+                Toast.makeText(context, "Bookmarked"+db.getBookmark_date()+" "+db.getBookmark_para_no(), Toast.LENGTH_SHORT).show();
             }
         });
     }
