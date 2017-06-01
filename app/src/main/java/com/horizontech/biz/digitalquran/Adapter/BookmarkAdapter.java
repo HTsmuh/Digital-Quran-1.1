@@ -10,8 +10,13 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.horizontech.biz.digitalquran.Database.DbBackend;
+import com.horizontech.biz.digitalquran.Fragments.BookmarkFragment;
 import com.horizontech.biz.digitalquran.R;
+
+import java.util.Arrays;
 
 public class BookmarkAdapter extends ArrayAdapter<String> {
     public Context context;
@@ -20,8 +25,8 @@ public class BookmarkAdapter extends ArrayAdapter<String> {
     private String[] bookmark_english_array;
     private String[] bookmark_verse_array;
     private String[] bookmark_date_array;
+    DbBackend db;
     private Typeface tf;
-
     public BookmarkAdapter(Context context, String[] serial_no, String[] bookamrk_arabic, String[] bookamrk_english,String[] bookamrk_verse,String[] bookamrk_date) {
         super(context, R.layout.custom_bookmark,R.id.bookmark_arabic,bookamrk_arabic);
         this.context=context;
@@ -36,7 +41,8 @@ public class BookmarkAdapter extends ArrayAdapter<String> {
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
         LayoutInflater inflater=(LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View row=inflater.inflate(R.layout.custom_single_row,parent,false);
+        View row=inflater.inflate(R.layout.custom_bookmark,parent,false);
+        db=new DbBackend(getContext());
         TextView bookmark_serial= (TextView) row.findViewById(R.id.bookmark_serial);
         TextView bookmark_arabic= (TextView) row.findViewById(R.id.bookmark_arabic);
         TextView bookmark_english= (TextView) row.findViewById(R.id.bookmark_english);
@@ -46,11 +52,19 @@ public class BookmarkAdapter extends ArrayAdapter<String> {
         bookmark_serial.setText(serial_no_array[position]);
         bookmark_arabic.setText(bookmark_arabic_array[position]);
         bookmark_english.setText(bookmark_english_array[position]);
-        String abc;
-        abc = "Verse Number : ";
-        bookmark_verse.setText(String.format("%s%s", abc, bookmark_verse_array[position]));
-        bookmark_date.setText(bookmark_date_array[position]);
+        String verse,bookmark;
+        verse = "Verse Number : ";
+        bookmark = "Bookmarked ";
+        bookmark_verse.setText(String.format("%s%s", verse, bookmark_verse_array[position]));
+        bookmark_date.setText(String.format("%s%s", bookmark, bookmark_date_array[position]));
         bookmark_image.setImageResource(R.drawable.bookmarkremove);
+        bookmark_image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Toast.makeText(context, "Removed"+db.getBookmark_index(), Toast.LENGTH_SHORT).show();
+            }
+        });
         bookmark_arabic.setTypeface(tf);
         return row;
     }

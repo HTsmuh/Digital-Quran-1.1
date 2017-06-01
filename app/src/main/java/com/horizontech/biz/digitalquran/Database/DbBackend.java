@@ -2,6 +2,7 @@ package com.horizontech.biz.digitalquran.Database;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -11,10 +12,13 @@ public class DbBackend extends DbObject {
     private String size;
     private String mode;
     private String script;
-    private String bookmark_para_no;
+    private int bookmark_para_no;
     private String bookmark_sura_no;
     private String bookmark_aya_no;
-    private String bookmark_date;
+    public String bookmarkParaArabic;
+    private int x = 1;
+    public String bookmarkParaEnglish;
+    public int bookmark_index;
     public DbBackend(Context context) {
         super(context);
     }
@@ -390,21 +394,22 @@ public class DbBackend extends DbObject {
         db.execSQL(query);
         this.script = script;
     }
-    public void insertINTObookmarkpara(String bookmark_para_no,String bookmark_aya_no,String bookmark_date){
-        String query = "INSERT INTO bookmark (para_no,aya_no,date) VALUES ('"+bookmark_para_no+"','"+bookmark_aya_no+"','"+bookmark_date+"')";
-        db.execSQL(query);
-        this.bookmark_para_no=bookmark_para_no;
-        this.bookmark_aya_no=bookmark_aya_no;
-        this.bookmark_date=bookmark_date;
-    }
-    public String getBookmark_para_no() {
-        return bookmark_para_no;
-    }
+    public int getBookmark_para_no() {  return bookmark_para_no;    }
 
-    public void setBookmark_para_no(String bookmark_para_no) {
+    public void setBookmark_para_no(int bookmark_para_no) {
+        String query = "select * from Parah_Names where _id ="+bookmark_para_no;
+        Cursor cursor = this.getDbConnection().rawQuery(query, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                bookmarkParaArabic= cursor.getString(cursor.getColumnIndexOrThrow("arabic_name"));
+                bookmarkParaEnglish= cursor.getString(cursor.getColumnIndexOrThrow("roman_name"));
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
         this.bookmark_para_no = bookmark_para_no;
     }
-
+    /*
     public String getBookmark_sura_no() {
         return bookmark_sura_no;
     }
@@ -419,13 +424,98 @@ public class DbBackend extends DbObject {
 
     public void setBookmark_aya_no(String bookmark_aya_no) {
         this.bookmark_aya_no = bookmark_aya_no;
-    }
+    }*/
 
-    public String getBookmark_date() {
+    public void insertINTObookmarkpara(int bookmark_para_no,String bookmark_para_arabic,String bookmark_para_roman,String bookmark_aya_no,String bookmark_date) {
+        String query = "INSERT INTO bookmark_para (para_no,para_arabic,para_english,aya_no,date) VALUES ('"+bookmark_para_no+"','"+bookmark_para_arabic+"','"+bookmark_para_roman+"','"+bookmark_aya_no+"','"+bookmark_date+"')";
+        db.execSQL(query);
+    }
+    public void deleteBookmarkPara(int index) {
+        String query = "DELETE FROM bookmark_para WHERE _id="+index;
+        db.execSQL(query);
+    }
+    public String[] getBookmarkParaDate() {
+        String query = "Select * from bookmark_para";
+        Cursor cursor = this.getDbConnection().rawQuery(query, null);
+        ArrayList<String> bookmark_date_array = new ArrayList<>();
+        if (cursor.moveToFirst()) {
+            do {
+                String bookmark_date = cursor.getString(cursor.getColumnIndexOrThrow("date"));
+                bookmark_date_array.add(bookmark_date);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        String[] bookmark_date = new String[bookmark_date_array.size()];
+        bookmark_date = bookmark_date_array.toArray(bookmark_date);
         return bookmark_date;
     }
-
-    public void setBookmark_date(String bookmark_date) {
-        this.bookmark_date = bookmark_date;
+    public String[] getBookmarkPara_arabic() {
+        String query = "Select * from bookmark_para";
+        Cursor cursor = this.getDbConnection().rawQuery(query, null);
+        ArrayList<String> bookmark_date_array = new ArrayList<>();
+        if (cursor.moveToFirst()) {
+            do {
+                String bookmark_date = cursor.getString(cursor.getColumnIndexOrThrow("para_arabic"));
+                bookmark_date_array.add(bookmark_date);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        String[] bookmark_date = new String[bookmark_date_array.size()];
+        bookmark_date = bookmark_date_array.toArray(bookmark_date);
+        return bookmark_date;
     }
+    public String[] getBookmarkPara_english() {
+        String query = "Select * from bookmark_para";
+        Cursor cursor = this.getDbConnection().rawQuery(query, null);
+        ArrayList<String> bookmark_date_array = new ArrayList<>();
+        if (cursor.moveToFirst()) {
+            do {
+                String bookmark_date = cursor.getString(cursor.getColumnIndexOrThrow("para_english"));
+                bookmark_date_array.add(bookmark_date);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        String[] bookmark_date = new String[bookmark_date_array.size()];
+        bookmark_date = bookmark_date_array.toArray(bookmark_date);
+        return bookmark_date;
+    }
+    public String[] getBookmarkPara_no() {
+        String query = "Select * from bookmark_para";
+        Cursor cursor = this.getDbConnection().rawQuery(query, null);
+        ArrayList<String> bookmark_date_array = new ArrayList<>();
+        if (cursor.moveToFirst()) {
+            do {
+                String bookmark_date = cursor.getString(cursor.getColumnIndexOrThrow("_id"));
+                bookmark_date_array.add(bookmark_date);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        String[] bookmark_date = new String[bookmark_date_array.size()];
+        bookmark_date = bookmark_date_array.toArray(bookmark_date);
+        return bookmark_date;
+    }
+    public String[] getBookmarkPara_serial() {
+        String query = "Select * from bookmark_para";
+        Cursor cursor = this.getDbConnection().rawQuery(query, null);
+        ArrayList<String> bookmark_date_array = new ArrayList<>();
+        if (cursor.moveToFirst()) {
+            do {
+
+                //String bookmark_date = cursor.getString(cursor.getColumnIndexOrThrow("para_no"));
+                bookmark_date_array.add(String.valueOf(x));
+                x=x+1;
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        String[] bookmark_date = new String[bookmark_date_array.size()];
+        bookmark_date = bookmark_date_array.toArray(bookmark_date);
+        return bookmark_date;
+    }
+    public int getBookmark_index() {
+        return bookmark_index;
+    }
+    public void setBookmark_index(int bookmark_index) {
+        this.bookmark_index = bookmark_index;
+    }
+
 }
