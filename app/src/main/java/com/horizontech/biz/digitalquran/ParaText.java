@@ -8,6 +8,7 @@ import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -76,7 +77,6 @@ public class ParaText extends AppCompatActivity {
         ParaTextList .addHeaderView(header, null, false);
         ParaTextScroll= (ScrollView) findViewById(R.id.paratextscroll);
         bookmark= (Button) findViewById(R.id.bookmark);
-
         RelativeLayout relativeLayout = (RelativeLayout)findViewById(R.id.activity_para_text);
         Resources res = getResources();
         Drawable portrait = res.getDrawable(R.drawable.portrait);
@@ -183,14 +183,16 @@ public class ParaText extends AppCompatActivity {
         bookmark.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                int scrollY = ParaTextScroll.getScrollY();
+
                 SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MMM-dd");
                 SimpleDateFormat sdf2 = new SimpleDateFormat("HH:mm:ss");
                 String currentDateandTime1 = sdf1.format(new Date());
                 String currentDateandTime2 = sdf2.format(new Date());
                 String currentDateandTime = " on "+currentDateandTime1+" at "+currentDateandTime2;
                 db.setBookmark_para_no(index);
-                db.insertINTObookmarkpara(db.getBookmark_para_no(),db.bookmarkParaArabic,db.bookmarkParaEnglish,null,currentDateandTime);
-                Toast.makeText(context, "Bookmarked", Toast.LENGTH_SHORT).show();
+                db.insertINTObookmarkpara(db.getBookmark_para_no(),db.bookmarkParaArabic,db.bookmarkParaEnglish,scrollY,currentDateandTime);
+                Toast.makeText(context, "Bookmarked"+scrollY, Toast.LENGTH_SHORT).show();
             }
         });
     }

@@ -2,61 +2,60 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:padding="10dp"
+    android:padding="5dp"
     android:layout_height="match_parent">
     <TextView
         android:id="@+id/bookmark_serial"
         android:layout_width="30dp"
         android:layout_height="wrap_content"
         android:textSize="15sp"
-        android:layout_marginTop="15dp"
+        android:layout_margin="5dp"
         android:text="No"
+        android:paddingTop="15dp"
         android:gravity="center_vertical"
-        android:textAppearance="?android:attr/textAppearanceListItemSmall"
-        android:minHeight="?android:attr/listPreferredItemHeightSmall"/>
-    <TextView
-        android:id="@+id/bookmark_english"
-        android:text="Roman"
-        android:layout_toRightOf="@+id/bookmark_serial"
-        android:layout_toLeftOf="@+id/bookmark_arabic"
-        android:layout_marginRight="10dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:textSize="18sp"
-        android:gravity="center_vertical"
+        android:minHeight="?android:attr/listPreferredItemHeightSmall"
         android:textAppearance="?android:attr/textAppearanceListItemSmall"/>
-    <TextView
-        android:id="@+id/bookmark_aya"
-        android:text="Verse Number : "
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/bookmark_english"
+        android:id="@+id/bookmark_layout"
         android:layout_toRightOf="@+id/bookmark_serial"
-        android:textSize="15sp"/>
+        android:layout_toLeftOf="@+id/bookmark_remove">
+        <TextView
+            android:id="@+id/bookmark_english"
+            android:text="Roman"
+            android:layout_marginRight="10dp"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_marginTop="10dp"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:gravity="center_vertical"
+            android:textAppearance="?android:attr/textAppearanceListItemSmall"/>
+        <TextView
+            android:id="@+id/bookmark_arabic"
+            android:text="بِسْمِ ٱللَّهِ"
+            android:paddingRight="10dp"
+            android:textStyle="bold"
+            android:layout_gravity="right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="25sp"
+            android:textAppearance="?android:attr/textAppearanceListItemSmall"/>
+
+    </LinearLayout>
+
     <TextView
         android:id="@+id/bookmark_date"
         android:text="Date &amp; time : "
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/bookmark_aya"
+        android:layout_below="@+id/bookmark_remove"
         android:layout_toRightOf="@+id/bookmark_serial"
-        android:textSize="15sp"/>
-    <TextView
-        android:id="@+id/bookmark_arabic"
-        android:text="بِسْمِ ٱللَّهِ"
-        android:paddingRight="10dp"
-        android:textStyle="bold"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="25sp"
-        android:layout_toLeftOf="@+id/bookmark_remove"
-        android:gravity="center_vertical"
-        android:textAppearance="?android:attr/textAppearanceListItemSmall"
-        android:minHeight="?android:attr/listPreferredItemHeightSmall" />
+        android:textSize="10sp"/>
     <ImageView
         android:id="@+id/bookmark_remove"
-        android:layout_height="40dp"
+        android:layout_height="35dp"
         android:layout_marginTop="5dp"
         android:src="@drawable/bookmarkremove"
         android:layout_alignParentTop="true"

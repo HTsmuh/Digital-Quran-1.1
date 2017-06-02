@@ -426,12 +426,12 @@ public class DbBackend extends DbObject {
         this.bookmark_aya_no = bookmark_aya_no;
     }*/
 
-    public void insertINTObookmarkpara(int bookmark_para_no,String bookmark_para_arabic,String bookmark_para_roman,String bookmark_aya_no,String bookmark_date) {
-        String query = "INSERT INTO bookmark_para (para_no,para_arabic,para_english,aya_no,date) VALUES ('"+bookmark_para_no+"','"+bookmark_para_arabic+"','"+bookmark_para_roman+"','"+bookmark_aya_no+"','"+bookmark_date+"')";
+    public void insertINTObookmarkpara(int bookmark_para_no,String bookmark_para_arabic,String bookmark_para_roman,int bookmark_scroll,String bookmark_date) {
+        String query = "INSERT INTO bookmark_para (para_no,para_arabic,para_english,aya_no,date) VALUES ('"+bookmark_para_no+"','"+bookmark_para_arabic+"','"+bookmark_para_roman+"','"+bookmark_scroll+"','"+bookmark_date+"')";
         db.execSQL(query);
     }
     public void deleteBookmarkPara(int index) {
-        String query = "DELETE FROM bookmark_para WHERE _id="+index;
+        String query = "DELETE FROM bookmark_para WHERE _id in (SELECT _id FROM bookmark_para LIMIT 1 OFFSET "+index+")";
         db.execSQL(query);
     }
     public String[] getBookmarkParaDate() {
@@ -486,6 +486,21 @@ public class DbBackend extends DbObject {
         if (cursor.moveToFirst()) {
             do {
                 String bookmark_date = cursor.getString(cursor.getColumnIndexOrThrow("_id"));
+                bookmark_date_array.add(bookmark_date);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        String[] bookmark_date = new String[bookmark_date_array.size()];
+        bookmark_date = bookmark_date_array.toArray(bookmark_date);
+        return bookmark_date;
+    }
+    public String[] getBookmarkPara_Scroll() {
+        String query = "Select * from bookmark_para";
+        Cursor cursor = this.getDbConnection().rawQuery(query, null);
+        ArrayList<String> bookmark_date_array = new ArrayList<>();
+        if (cursor.moveToFirst()) {
+            do {
+                String bookmark_date = cursor.getString(cursor.getColumnIndexOrThrow("para_aya"));
                 bookmark_date_array.add(bookmark_date);
             } while (cursor.moveToNext());
         }

@@ -1,22 +1,17 @@
 package com.horizontech.biz.digitalquran.Fragments;
 
 
-import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.Toast;
-
 import com.horizontech.biz.digitalquran.Adapter.BookmarkAdapter;
-import com.horizontech.biz.digitalquran.Adapter.ParaNameAdapter;
 import com.horizontech.biz.digitalquran.Database.DbBackend;
-import com.horizontech.biz.digitalquran.ParaText;
 import com.horizontech.biz.digitalquran.R;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -27,7 +22,6 @@ public class BookmarkFragment extends Fragment {
     ListView bookmark_sura;
     BookmarkAdapter listAdapter;
     DbBackend db;
-    Cursor cursor;
     public BookmarkFragment() {
         // Required empty public constructor
     }
@@ -47,13 +41,12 @@ public class BookmarkFragment extends Fragment {
         String[] para_serial=db.getBookmarkPara_serial();
         String[] para_no=db.getBookmarkPara_no();
         listAdapter = new BookmarkAdapter(getContext(),para_serial,para_arabic,para_english,para_no,para_date);
+        listAdapter.notifyDataSetChanged();
         bookmark_para.setAdapter(listAdapter);
         bookmark_para.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                db.setBookmark_index(position);
-                db.deleteBookmarkPara(position+1);
-                Toast.makeText(getActivity(), ""+db.getBookmark_index(), Toast.LENGTH_SHORT).show();
+
             }
         });
         return myView;

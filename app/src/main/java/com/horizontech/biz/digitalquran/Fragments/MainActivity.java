@@ -163,6 +163,21 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
     @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.action_credit) {
+            Intent intent = new Intent(this, CreditsActivity.class);
+            startActivity(intent);
+        }else  if (id == R.id.action_settings) {
+            Intent intent = new Intent(this, SettingActivity.class);
+            startActivity(intent);
+        }else  if (id == R.id.action_about) {
+            Intent intent = new Intent(this, AboutUsActivity.class);
+            startActivity(intent);
+        }
+        return super.onOptionsItemSelected(item);
+    }
+    @Override
     public void onBackPressed() {
         if (network.equals("true")) {
             new AlertDialog.Builder(this)
@@ -188,35 +203,20 @@ public class MainActivity extends AppCompatActivity {
                     })
                     .show();
         }else{
-                new AlertDialog.Builder(this)
-                        .setIcon(R.drawable.alert)
-                        .setTitle("Closing Application")
-                        .setMessage("Are you sure you want to close this Application?")
-                        .setPositiveButton("Yes", new DialogInterface.OnClickListener()
-                        {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                finish();
-                            }
+            new AlertDialog.Builder(this)
+                    .setIcon(R.drawable.alert)
+                    .setTitle("Closing Application")
+                    .setMessage("Are you sure you want to close this Application?")
+                    .setPositiveButton("Yes", new DialogInterface.OnClickListener()
+                    {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            finish();
+                        }
 
-                        })
-                        .setNegativeButton("No", null)
-                        .show();
-            }
+                    })
+                    .setNegativeButton("No", null)
+                    .show();
         }
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == R.id.action_credit) {
-            Intent intent = new Intent(this, CreditsActivity.class);
-            startActivity(intent);
-        }else  if (id == R.id.action_settings) {
-            Intent intent = new Intent(this, SettingActivity.class);
-            startActivity(intent);
-        }else  if (id == R.id.action_about) {
-            Intent intent = new Intent(this, AboutUsActivity.class);
-            startActivity(intent);
-        }
-        return super.onOptionsItemSelected(item);
     }
 }
