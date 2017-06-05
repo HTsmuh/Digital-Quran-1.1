@@ -1,16 +1,47 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+android:layout_width="fill_parent"
+android:layout_height="wrap_content"
+android:fillViewport="true" >
+
+<LinearLayout
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#fff"
-    tools:context="com.horizontech.biz.digitalquran.Fragments.BookmarkFragment">
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:textAlignment="center"
+        android:padding="10dp"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:background="@color/colorBackground"
+        android:text="PARA"/>
+
     <ListView
+        android:id="@+id/bookmark_para"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/bookmark_sura"/>
+        android:background="#fff" >
+    </ListView>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:textAlignment="center"
+        android:padding="10dp"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:background="@color/colorBackground"
+        android:text="SURAH"/>
+
     <ListView
+        android:id="@+id/bookmark_sura"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/bookmark_sura"
-        android:id="@+id/bookmark_para"/>
-</RelativeLayout>
+        android:background="#fff" >
+    </ListView>
+</LinearLayout>
+
+</ScrollView>

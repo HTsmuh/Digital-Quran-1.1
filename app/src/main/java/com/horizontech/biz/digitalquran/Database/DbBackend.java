@@ -19,7 +19,7 @@ public class DbBackend extends DbObject {
     public String bookmarkParaArabic;
     private int x = 1;
     public String bookmarkParaEnglish;
-    public int bookmark_index;
+    private int bookmark_index;
     public DbBackend(Context context) {
         super(context);
     }
@@ -410,7 +410,7 @@ public class DbBackend extends DbObject {
         cursor.close();
         this.bookmark_para_no = bookmark_para_no;
     }
-    /*
+
     public String getBookmark_sura_no() {
         return bookmark_sura_no;
     }
@@ -418,7 +418,7 @@ public class DbBackend extends DbObject {
     public void setBookmark_sura_no(String bookmark_sura_no) {
         this.bookmark_sura_no = bookmark_sura_no;
     }
-
+/*
     public String getBookmark_aya_no() {
         return bookmark_aya_no;
     }
@@ -496,21 +496,6 @@ public class DbBackend extends DbObject {
         bookmark_date = bookmark_date_array.toArray(bookmark_date);
         stringList = new ArrayList<String>(Arrays.asList(bookmark_date));
         return stringList;
-    }
-    public String[] getBookmarkPara_Scroll() {
-        String query = "Select * from bookmark_para";
-        Cursor cursor = this.getDbConnection().rawQuery(query, null);
-        ArrayList<String> bookmark_date_array = new ArrayList<>();
-        if (cursor.moveToFirst()) {
-            do {
-                String bookmark_date = cursor.getString(cursor.getColumnIndexOrThrow("para_aya"));
-                bookmark_date_array.add(bookmark_date);
-            } while (cursor.moveToNext());
-        }
-        cursor.close();
-        String[] bookmark_date = new String[bookmark_date_array.size()];
-        bookmark_date = bookmark_date_array.toArray(bookmark_date);
-        return bookmark_date;
     }
     public String[] getBookmarkPara_serial() {
         String query = "Select * from bookmark_para";

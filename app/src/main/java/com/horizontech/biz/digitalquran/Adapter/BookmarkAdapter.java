@@ -9,10 +9,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.ListAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.horizontech.biz.digitalquran.Database.DbBackend;
+import com.horizontech.biz.digitalquran.Fragments.BookmarkFragment;
 import com.horizontech.biz.digitalquran.R;
 
 import java.util.List;
@@ -25,10 +28,9 @@ public class BookmarkAdapter extends ArrayAdapter<String> {
     private String[] bookmark_verse_array;
     private String[] bookmark_date_array;
     private DbBackend db;
-    BookmarkAdapter adapter;
-    List<String> items;
+    private BookmarkAdapter adapter;
+    private List<String> items;
     private Typeface tf;
-
 
     public BookmarkAdapter(Context context, String[] serial_no, String[] bookamrk_arabic, String[] bookamrk_english, List<String> items, String[] bookamrk_date) {
         super(context, R.layout.custom_bookmark,R.id.bookmark_arabic,items);

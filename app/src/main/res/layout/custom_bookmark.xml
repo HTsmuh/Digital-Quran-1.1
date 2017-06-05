@@ -50,7 +50,7 @@
         android:text="Date &amp; time : "
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/bookmark_remove"
+        android:layout_below="@+id/bookmark_layout"
         android:layout_toRightOf="@+id/bookmark_serial"
         android:textSize="10sp"/>
     <ImageView
