@@ -11,6 +11,8 @@ import android.widget.ListView;
 import com.horizontech.biz.digitalquran.Adapter.BookmarkAdapter;
 import com.horizontech.biz.digitalquran.Database.DbBackend;
 import com.horizontech.biz.digitalquran.R;
+
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -39,7 +41,7 @@ public class BookmarkFragment extends Fragment {
         String[] para_arabic=db.getBookmarkPara_arabic();
         String[] para_english=db.getBookmarkPara_english();
         String[] para_serial=db.getBookmarkPara_serial();
-        String[] para_no=db.getBookmarkPara_no();
+        List<String> para_no= db.getBookmarkPara_no();
         listAdapter = new BookmarkAdapter(getContext(),para_serial,para_arabic,para_english,para_no,para_date);
         listAdapter.notifyDataSetChanged();
         bookmark_para.setAdapter(listAdapter);

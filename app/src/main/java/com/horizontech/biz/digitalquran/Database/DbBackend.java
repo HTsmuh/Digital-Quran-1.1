@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class DbBackend extends DbObject {
 
@@ -479,7 +480,8 @@ public class DbBackend extends DbObject {
         bookmark_date = bookmark_date_array.toArray(bookmark_date);
         return bookmark_date;
     }
-    public String[] getBookmarkPara_no() {
+    public List<String> getBookmarkPara_no() {
+        List<String> stringList;
         String query = "Select * from bookmark_para";
         Cursor cursor = this.getDbConnection().rawQuery(query, null);
         ArrayList<String> bookmark_date_array = new ArrayList<>();
@@ -492,7 +494,8 @@ public class DbBackend extends DbObject {
         cursor.close();
         String[] bookmark_date = new String[bookmark_date_array.size()];
         bookmark_date = bookmark_date_array.toArray(bookmark_date);
-        return bookmark_date;
+        stringList = new ArrayList<String>(Arrays.asList(bookmark_date));
+        return stringList;
     }
     public String[] getBookmarkPara_Scroll() {
         String query = "Select * from bookmark_para";

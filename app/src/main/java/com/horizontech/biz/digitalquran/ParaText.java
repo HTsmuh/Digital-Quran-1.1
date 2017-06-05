@@ -174,6 +174,7 @@ public class ParaText extends AppCompatActivity {
                     isTranslate=false;
                     quranText.setVisibility(View.VISIBLE);
                     ParaTextScroll.setVisibility(View.VISIBLE);
+                    //ParaTextScroll.scrollTo(0,1406);
                     ParaTextList.setVisibility(View.INVISIBLE);
                 }
             }
@@ -192,7 +193,7 @@ public class ParaText extends AppCompatActivity {
                 String currentDateandTime = " on "+currentDateandTime1+" at "+currentDateandTime2;
                 db.setBookmark_para_no(index);
                 db.insertINTObookmarkpara(db.getBookmark_para_no(),db.bookmarkParaArabic,db.bookmarkParaEnglish,scrollY,currentDateandTime);
-                Toast.makeText(context, "Bookmarked"+scrollY, Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "Bookmarked", Toast.LENGTH_SHORT).show();
             }
         });
     }
