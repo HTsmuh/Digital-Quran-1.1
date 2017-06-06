@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
+import com.horizontech.biz.digitalquran.Fragments.BookmarkFragment;
 import com.horizontech.biz.digitalquran.Fragments.ParaFragment;
 import com.horizontech.biz.digitalquran.Fragments.SurahFragment;
 
@@ -26,6 +27,7 @@ public class PagerAdapter extends FragmentStatePagerAdapter {
             case 1:
                 return new ParaFragment();
             case 2:
+                return new BookmarkFragment();
             default:
                 return null;
         }
