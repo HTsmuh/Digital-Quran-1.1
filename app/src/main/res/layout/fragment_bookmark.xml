@@ -1,41 +1,28 @@
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-android:layout_width="fill_parent"
-android:layout_height="wrap_content"
-android:fillViewport="true" >
-
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:id="@+id/content_frame"
+    android:layout_height="match_parent">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="No Bookmark Available"
+        android:id="@+id/no_bookmark"
+        android:visibility="invisible"
+        android:layout_centerInParent="true"/>
+        <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:fillViewport="true" >
 <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical" >
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:textAlignment="center"
-        android:padding="10dp"
-        android:textColor="@color/colorPrimaryDark"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:background="@color/colorBackground"
-        android:text="PARA"/>
-
     <ListView
         android:id="@+id/bookmark_para"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#fff" >
     </ListView>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:textAlignment="center"
-        android:padding="10dp"
-        android:textColor="@color/colorPrimaryDark"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:background="@color/colorBackground"
-        android:text="SURAH"/>
-
     <ListView
         android:id="@+id/bookmark_sura"
         android:layout_width="match_parent"
@@ -43,5 +30,5 @@ android:fillViewport="true" >
         android:background="#fff" >
     </ListView>
 </LinearLayout>
-
 </ScrollView>
+</RelativeLayout>

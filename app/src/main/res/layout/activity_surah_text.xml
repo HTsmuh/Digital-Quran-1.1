@@ -58,7 +58,7 @@
     <Button
         android:layout_width="0dp"
         android:layout_weight="1"
-        android:id="@+id/bookmark"
+        android:id="@+id/bookmark_surah"
         android:layout_height="25dp"
         android:background="#364710"
         android:text="BOOKMARK"

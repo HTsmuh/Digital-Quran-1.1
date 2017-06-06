@@ -8,7 +8,6 @@ import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -69,14 +68,13 @@ public class ParaText extends AppCompatActivity {
             setTheme(R.style.NightMoodFullScreen);
         }
         setContentView(R.layout.activity_para_text);
-
         translation= (Button) findViewById(R.id.translate);
         ParaTextList= (ListView) findViewById(R.id.paratextlist);
         inflater = getLayoutInflater();
         header = (ViewGroup)inflater.inflate(R.layout.custom_translation_header, ParaTextList , false);
         ParaTextList .addHeaderView(header, null, false);
         ParaTextScroll= (ScrollView) findViewById(R.id.paratextscroll);
-        bookmark= (Button) findViewById(R.id.bookmark);
+        bookmark= (Button) findViewById(R.id.bookmark_para);
         RelativeLayout relativeLayout = (RelativeLayout)findViewById(R.id.activity_para_text);
         Resources res = getResources();
         Drawable portrait = res.getDrawable(R.drawable.portrait);
@@ -115,7 +113,9 @@ public class ParaText extends AppCompatActivity {
         }
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
-        index = bundle.getInt("Para_Number");
+        int index1 = bundle.getInt("Para_Number");
+        int index2 = bundle.getInt("BookmarkFragment");
+        index=index1+index2;
             if (db.getScript().equals("pdms")){
                 text = db.Para_Text_pdms(index);
             }else {

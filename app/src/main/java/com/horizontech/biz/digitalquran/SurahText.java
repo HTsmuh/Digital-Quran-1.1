@@ -21,10 +21,14 @@ import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.horizontech.biz.digitalquran.Adapter.TranslationAdapter;
 import com.horizontech.biz.digitalquran.Database.DbBackend;
+
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Date;
 
 public class SurahText extends AppCompatActivity {
     TextView quranText;
@@ -34,6 +38,7 @@ public class SurahText extends AppCompatActivity {
     ViewGroup header;
     int num;
     int index;
+    Button bookmark;
     Button translation;
     ListView SurahTextList;
     boolean isTranslate=false;
@@ -65,7 +70,7 @@ public class SurahText extends AppCompatActivity {
 
         translation= (Button) findViewById(R.id.translate);
         SurahTextList= (ListView) findViewById(R.id.surahtextlist);
-
+        bookmark= (Button) findViewById(R.id.bookmark_surah);
         LayoutInflater inflater = getLayoutInflater();
         header = (ViewGroup)inflater.inflate(R.layout.custom_translation_header, SurahTextList , false);
         SurahTextList .addHeaderView(header, null, false);
@@ -108,7 +113,9 @@ public class SurahText extends AppCompatActivity {
         }
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
-        index = bundle.getInt("Surah_Number");
+        int index1 = bundle.getInt("Surah_Number");
+        int index2 = bundle.getInt("BookmarkFragment");
+        index=index1+index2;
         db=new DbBackend(SurahText.this);
         if (index==9){
             bismillah.setVisibility(View.INVISIBLE);
@@ -176,8 +183,20 @@ public class SurahText extends AppCompatActivity {
 
 
         });
+        bookmark.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int scrollY = SurahTextScroll.getScrollY();
+
+                SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MMM-dd");
+                SimpleDateFormat sdf2 = new SimpleDateFormat("HH:mm:ss");
+                String currentDateandTime1 = sdf1.format(new Date());
+                String currentDateandTime2 = sdf2.format(new Date());
+                String currentDateandTime = " on "+currentDateandTime1+" at "+currentDateandTime2;
+                db.setBookmark_sura_no(index);
+                db.insertINTObookmarkSurah(db.getBookmark_sura_no(),db.bookmarkSurahArabic,db.bookmarkSurahEnglish,scrollY,currentDateandTime);
+                Toast.makeText(context, "Bookmarked", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
-
-
-
 }

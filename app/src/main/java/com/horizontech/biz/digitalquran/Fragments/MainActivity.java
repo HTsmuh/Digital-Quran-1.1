@@ -82,8 +82,8 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
-        tabLayout.addTab(tabLayout.newTab().setText("PARA"));
         tabLayout.addTab(tabLayout.newTab().setText("SURAH"));
+        tabLayout.addTab(tabLayout.newTab().setText("PARA"));
         tabLayout.addTab(tabLayout.newTab().setText("BOOKMARK"));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 

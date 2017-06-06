@@ -4,7 +4,7 @@
     android:layout_height="match_parent">
 <TextView
     android:layout_width="match_parent"
-    android:id="@+id/para_header"
+    android:id="@+id/surah_header"
     android:layout_height="50dp"
     android:textAlignment="center"
     android:padding="10dp"
@@ -12,5 +12,5 @@
     android:textSize="20sp"
     android:textStyle="bold"
     android:background="@color/colorBackground"
-    android:text="PARA BOOKMARKS"/>
+    android:text="SURAH"/>
 </LinearLayout>

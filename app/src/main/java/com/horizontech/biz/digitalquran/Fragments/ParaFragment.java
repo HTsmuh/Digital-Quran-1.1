@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.horizontech.biz.digitalquran.Adapter.ParaNameAdapter;
 import com.horizontech.biz.digitalquran.Database.DbBackend;

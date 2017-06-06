@@ -7,13 +7,11 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
-import com.horizontech.biz.digitalquran.Fragments.BookmarkFragment;
 import com.horizontech.biz.digitalquran.Fragments.ParaFragment;
 import com.horizontech.biz.digitalquran.Fragments.SurahFragment;
 
 public class PagerAdapter extends FragmentStatePagerAdapter {
-    int mNumOfTabs;
-
+    private int mNumOfTabs;
     public PagerAdapter(FragmentManager fm, int NumOfTabs) {
         super(fm);
         this.mNumOfTabs = NumOfTabs;
@@ -24,14 +22,10 @@ public class PagerAdapter extends FragmentStatePagerAdapter {
 
         switch (position) {
             case 0:
-                ParaFragment para = new ParaFragment();
-                return para;
+                return new SurahFragment();
             case 1:
-                SurahFragment surah = new SurahFragment();
-                return surah;
+                return new ParaFragment();
             case 2:
-                BookmarkFragment bookmark = new BookmarkFragment();
-                return bookmark;
             default:
                 return null;
         }
