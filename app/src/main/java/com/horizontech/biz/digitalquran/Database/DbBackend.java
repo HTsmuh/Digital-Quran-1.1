@@ -13,6 +13,9 @@ public class DbBackend extends DbObject {
     private String size;
     private String mode;
     private String script;
+    public String checkupdate;
+    public String startdate;
+    private String enddate;
     private int bookmark_para_no;
     private int bookmark_sura_no;
     public String bookmarkParaArabic;
@@ -397,6 +400,56 @@ public class DbBackend extends DbObject {
         String query = "update User_Setting set text_script='"+script+"' where _id=1";
         db.execSQL(query);
         this.script = script;
+    }public String getCheckUpdate() {
+        String query = "Select * from User_Setting where _id=1";
+        Cursor cursor = this.getDbConnection().rawQuery(query, null);
+        if (cursor.moveToFirst()) {
+            do {
+                script = cursor.getString(cursor.getColumnIndexOrThrow("check_update"));
+
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        return script;
+    }
+    public void setCheckUpdate(String checkupdate) {
+        String query = "update User_Setting set check_update='"+checkupdate+"' where _id=1";
+        db.execSQL(query);
+        this.checkupdate = checkupdate;
+    }
+    public String getStartdate() {
+        String query = "Select * from User_Setting where _id=1";
+        Cursor cursor = this.getDbConnection().rawQuery(query, null);
+        if (cursor.moveToFirst()) {
+            do {
+                startdate = cursor.getString(cursor.getColumnIndexOrThrow("start_date"));
+
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        return startdate;
+    }
+    public void setStartdate(String startdate) {
+        String query = "update User_Setting set start_date='"+startdate+"' where _id=1";
+        db.execSQL(query);
+        this.startdate = startdate;
+    }
+    public String getEnddate() {
+        String query = "Select * from User_Setting where _id=1";
+        Cursor cursor = this.getDbConnection().rawQuery(query, null);
+        if (cursor.moveToFirst()) {
+            do {
+                enddate = cursor.getString(cursor.getColumnIndexOrThrow("end_date"));
+
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        return enddate;
+    }
+    public void setEnddate(String enddate) {
+        String query = "update User_Setting set end_date='"+enddate+"' where _id=1";
+        db.execSQL(query);
+        this.enddate = enddate;
     }
     public int getBookmark_para_no() {  return bookmark_para_no;    }
 

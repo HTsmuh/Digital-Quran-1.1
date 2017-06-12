@@ -19,12 +19,12 @@ import com.horizontech.biz.digitalquran.R;
 
 public class TranslationAdapter extends ArrayAdapter<String> {
     public Context context;
-    public String[] ayat_translation_array;
-    public String[] ayat_arabic_array;
-    public Typeface tf;
-    public TextView arabic;
-    public TextView translation;
-    public DbBackend db;
+    private String[] ayat_translation_array;
+    private String[] ayat_arabic_array;
+    private Typeface tf;
+    private TextView arabic;
+    private TextView translation;
+    private DbBackend db;
 
     public TranslationAdapter(Context context, String[] ayat_translation, String[] ayat_arabic) {
         super(context, R.layout.custom_translation_single_row,R.id.translationArabicText,ayat_arabic);

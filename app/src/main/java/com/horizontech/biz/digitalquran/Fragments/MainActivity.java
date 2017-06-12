@@ -18,8 +18,10 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.horizontech.biz.digitalquran.Adapter.PagerAdapter;
+import com.horizontech.biz.digitalquran.Database.DbBackend;
 import com.horizontech.biz.digitalquran.Menu.AboutUsActivity;
 import com.horizontech.biz.digitalquran.Menu.CreditsActivity;
 import com.horizontech.biz.digitalquran.R;
@@ -28,6 +30,10 @@ import com.horizontech.biz.digitalquran.Menu.SettingActivity;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.concurrent.ExecutionException;
 
 
@@ -36,48 +42,53 @@ public class MainActivity extends AppCompatActivity {
     boolean haveConnectedMobile = false;
     String latestVersion;
     String network;
+    Date currentDate;
+    Date intervalDate;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         network= String.valueOf(haveNetworkConnection());
-        if (network.equals("true")){
-            //getCurrentVersion();
-            String currentVersion = getCurrentVersion();
-            Log.d("LOG", "Current version = " + currentVersion);
+        DbBackend db=new DbBackend(MainActivity.this);
+        if (db.getCheckUpdate().equals("never")){
+            network="false";
+        }else {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MMM-dd");
+            String current = sdf.format(new Date());
             try {
-                latestVersion = new GetLatestVersion().execute().get();
-                Log.d("LOG", "Latest version = " + latestVersion);
-            } catch (InterruptedException | ExecutionException e) {
+                currentDate = sdf.parse(current);
+            } catch (ParseException e) {
                 e.printStackTrace();
             }
-
-            //Toast.makeText(this, ""+network+"  "+latestVersion+"  "+currentVersion, Toast.LENGTH_SHORT).show();
-            //If the versions are not the same
-            if(!currentVersion.equals(latestVersion)){
-                final AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                builder.setTitle("An Update is Available");
-                builder.setPositiveButton("Update", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        //Click button action
-                        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + getPackageName())));
-                        dialog.dismiss();
-                    }
-                });
-
-                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        //Cancel button action
-                    }
-                });
-
-                builder.setCancelable(false);
-                builder.show();
+            try {
+                intervalDate = sdf.parse(db.getEnddate());
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            Calendar c = Calendar.getInstance();
+            try {
+                c.setTime(sdf.parse(current));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            if (db.getCheckUpdate().equals("never")) {
+                c.add(Calendar.DATE, 0);
+            } else {
+                c.add(Calendar.DATE, Integer.parseInt(db.getCheckUpdate()));
+            }
+            sdf = new SimpleDateFormat("yyyy-MMM-dd");
+            Date resultdate = new Date(c.getTimeInMillis());
+            String endDate = sdf.format(resultdate);
+            if (currentDate.equals(intervalDate)) {
+                db.setStartdate(current);
+                db.setEnddate(endDate);
+                Check_Update();
+            } else if (intervalDate.before(currentDate)) {
+                db.setStartdate(current);
+                db.setEnddate(endDate);
+                Check_Update();
             }
         }
-
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -96,12 +107,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 viewPager.setCurrentItem(tab.getPosition());
+
             }
 
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
 
             }
+
 
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
@@ -134,6 +147,45 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return pInfo.versionName;
+    }
+    public void Check_Update() {
+        if (network.equals("true")) {
+            //getCurrentVersion();
+            String currentVersion = getCurrentVersion();
+            Log.d("LOG", "Current version = " + currentVersion);
+            try {
+                latestVersion = new GetLatestVersion().execute().get();
+                Log.d("LOG", "Latest version = " + latestVersion);
+            } catch (InterruptedException | ExecutionException e) {
+                e.printStackTrace();
+            }
+
+            //Toast.makeText(this, ""+network+"  "+latestVersion+"  "+currentVersion, Toast.LENGTH_SHORT).show();
+            //If the versions are not the same
+
+            if (!currentVersion.equals(latestVersion)) {
+                final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setTitle("An Update is Available");
+                builder.setPositiveButton("Update", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        //Click button action
+                        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + getPackageName())));
+                        dialog.dismiss();
+                    }
+                });
+
+                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        //Cancel button action
+                    }
+                });
+
+                builder.setCancelable(false);
+                builder.show();
+            }
+        }
     }
     private class GetLatestVersion extends AsyncTask<String, String, String> {
         @Override

@@ -23,4 +23,37 @@
         <item>Me Quran</item>
         <item>PDMS Saleem</item>
     </string-array>
+    <string-array name="text_update">
+        <item>Never</item>
+        <item>After 1 day</item>
+        <item>After 2 days</item>
+        <item>After 3 days</item>
+        <item>After 4 days</item>
+        <item>After 5 days</item>
+        <item>After 6 days</item>
+        <item>After 7 days</item>
+        <item>After 8 days</item>
+        <item>After 9 days</item>
+        <item>After 10 days</item>
+        <item>After 11 days</item>
+        <item>After 12 days</item>
+        <item>After 13 days</item>
+        <item>After 14 days</item>
+        <item>After 15 days</item>
+        <item>After 16 days</item>
+        <item>After 17 days</item>
+        <item>After 18 days</item>
+        <item>After 19 days</item>
+        <item>After 20 days</item>
+        <item>After 21 days</item>
+        <item>After 22 days</item>
+        <item>After 23 days</item>
+        <item>After 24 days</item>
+        <item>After 25 days</item>
+        <item>After 26 days</item>
+        <item>After 27 days</item>
+        <item>After 28 days</item>
+        <item>After 29 days</item>
+        <item>After 30 days</item>
+    </string-array>
 </resources>

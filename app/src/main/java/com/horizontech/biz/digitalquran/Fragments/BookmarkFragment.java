@@ -50,8 +50,7 @@ public class BookmarkFragment extends Fragment {
     List<String> sura_no;
     ViewGroup para_header;
     ViewGroup surah_header;
-    public void checkValidation(ListView listView){
-        ListAdapter listAdapter = listView.getAdapter();
+    public void checkValidation(){
         if (Arrays.toString(para_serial).equals("[]")&&Arrays.toString(sura_serial).equals("[]")){
             para_header.findViewById(R.id.para_header).setVisibility(View.GONE);
             surah_header.findViewById(R.id.surah_header).setVisibility(View.GONE);
@@ -62,7 +61,8 @@ public class BookmarkFragment extends Fragment {
             surah_header.findViewById(R.id.surah_header).setVisibility(View.GONE);
         }
     }
-    public void replaceFragment(Fragment someFragment) {
+
+    public void refreshFragment(Fragment someFragment) {
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         transaction.replace(R.id.content_frame, someFragment);
         transaction.addToBackStack(null);
@@ -114,15 +114,13 @@ public class BookmarkFragment extends Fragment {
         SurahAdapter = new BookmarkSurahAdapter(getContext(), sura_serial, sura_arabic, sura_english, sura_no, sura_date);
         ParaAdapter = new BookmarkParaAdapter(getContext(), para_serial, para_arabic, para_english, para_no, para_date);
 
-        bookmark_para .addHeaderView(para_header, null, false);
-        bookmark_sura .addHeaderView(surah_header, null, false);
+        bookmark_para.addHeaderView(para_header, null, false);
+        bookmark_sura.addHeaderView(surah_header, null, false);
 
         bookmark_sura.setAdapter(SurahAdapter);
         bookmark_para.setAdapter(ParaAdapter);
 
-        checkValidation(bookmark_sura);
-        checkValidation(bookmark_para);
-
+        checkValidation();
         setDynamicHeight(bookmark_para);
         setDynamicHeight(bookmark_sura);
         bookmark_para.setOnItemClickListener(new AdapterView.OnItemClickListener() {
