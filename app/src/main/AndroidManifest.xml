@@ -14,17 +14,18 @@
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity android:name=".Fragments.MainActivity" />
         <activity
             android:name=".SurahText"
-            android:theme="@style/DayMoodFullScreen" />
+            android:theme="@style/DayMoodFullScreen"
+            android:configChanges="orientation|keyboardHidden|screenSize" />
         <activity
             android:name=".ParaText"
-            android:theme="@style/NightMoodFullScreen" />
+            android:theme="@style/NightMoodFullScreen"
+            android:configChanges="orientation|keyboardHidden|screenSize"/>
         <activity
             android:name=".Menu.SettingActivity"
             android:label="Settings"

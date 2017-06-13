@@ -10,7 +10,7 @@
         android:layout_height="match_parent"
         android:id="@+id/activity_surah_text"
         android:background="@drawable/portrait"
-        android:layout_marginBottom="25dp">
+        android:layout_marginBottom="35dp">
 
     <ListView
         android:layout_width="match_parent"
@@ -52,26 +52,60 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:id="@+id/para_bottom"
         android:layout_alignParentBottom="true"
-        android:layout_centerInParent="true"
-        android:weightSum="2">
-    <Button
-        android:layout_width="0dp"
-        android:layout_weight="1"
-        android:id="@+id/bookmark_surah"
-        android:layout_height="25dp"
-        android:background="#364710"
-        android:text="BOOKMARK"
-        android:textColor="@color/colorBackground"
-        android:layout_marginRight="2dp"/>
-    <Button
-        android:layout_width="0dp"
-        android:layout_weight="1"
-        android:id="@+id/translate"
-        android:layout_height="25dp"
-        android:background="#364710"
-        android:text="SHOW TRANSLATION"
-        android:textColor="@color/colorBackground"
-        android:layout_marginLeft="2dp"/>
+        android:background="#d3233004"
+        android:layout_centerInParent="true">
+        <Button
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:id="@+id/bookmark_surah"
+            android:layout_height="35dp"
+            android:background="#00cccccc"
+            android:text="BOOKMARK"
+            android:textColor="@color/colorBackground"
+            android:layout_marginRight="2dp"/>
+        <Button
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:id="@+id/translate"
+            android:layout_height="35dp"
+            android:background="#00cccccc"
+            android:text="SHOW TRANSLATION"
+            android:textColor="@color/colorBackground"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/para_translation"
+        android:background="#d3233004"
+        android:padding="3dp"
+        android:visibility="gone"
+        android:layout_alignParentBottom="true"
+        android:layout_centerInParent="true">
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:id="@+id/bookmark_para2"
+            android:layout_height="30dp"
+            android:src="@drawable/bookmarkadd_light"/>
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:id="@+id/trnslate_urdu"
+            android:layout_height="30dp"
+            android:src="@drawable/urdu_translation"/>
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:id="@+id/trnslate_english"
+            android:layout_height="30dp"
+            android:src="@drawable/eng_translation"/>
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:id="@+id/hide_translate"
+            android:layout_height="30dp"
+            android:src="@drawable/hide_icon"/>
     </LinearLayout>
 </RelativeLayout>

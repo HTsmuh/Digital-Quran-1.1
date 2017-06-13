@@ -26,7 +26,7 @@ public class TranslationAdapter extends ArrayAdapter<String> {
     private TextView translation;
     private DbBackend db;
 
-    public TranslationAdapter(Context context, String[] ayat_translation, String[] ayat_arabic) {
+    public TranslationAdapter(Context context,String[] ayat_arabic,String[] ayat_translation) {
         super(context, R.layout.custom_translation_single_row,R.id.translationArabicText,ayat_arabic);
         this.context=context;
         this.ayat_translation_array=ayat_translation;
@@ -54,7 +54,8 @@ public class TranslationAdapter extends ArrayAdapter<String> {
             arabic.setTextSize(30);
             translation.setTextSize(27);
         }
-        arabic.setText(ayat_arabic_array[position]);
+        String abc=" ";
+        arabic.setText(String.format("%s%s", abc, ayat_arabic_array[position]));
         translation.setText(ayat_translation_array[position]);
         arabic.setTypeface(tf);
         return row;
