@@ -124,8 +124,8 @@ public class SurahText extends AppCompatActivity {
         arabic_text = db.Surah_Ayat_Text(index);
         translation_text_Eng = db.Surah_Translation_Eng(index);
         translation_text_Urdu = db.Surah_Translation_Urdu(index);
-        listAdapter_Eng = new TranslationAdapter(this,arabic_text,translation_text_Eng);
-        listAdapter_Urdu = new TranslationAdapter(this,arabic_text,translation_text_Urdu);
+        listAdapter_Eng = new TranslationAdapter(this,Surah_text,translation_text_Eng);
+        listAdapter_Urdu = new TranslationAdapter(this,Surah_text,translation_text_Urdu);
         quranText.setText(finalize2);
         show_translation_btn.setOnClickListener(new View.OnClickListener() {
             @Override

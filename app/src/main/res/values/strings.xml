@@ -5,6 +5,8 @@
     <string name="action_settings">Settings</string>
     <string name="action_credit">Credits</string>
     <string name="action_about_us">About</string>
+    <string name="search">Search</string>
+    <string name="bookamrk">Bookamrk</string>
 
     <string-array name="text_size">
         <item>Select Text Size</item>

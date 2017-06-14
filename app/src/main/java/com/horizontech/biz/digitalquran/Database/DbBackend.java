@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class DbBackend extends DbObject {
@@ -173,8 +174,9 @@ public class DbBackend extends DbObject {
             } while (cursor.moveToNext());
 
             for(int i = 0; i < first.size(); i++) {
-                quran_text_array.add(first.get(i));
-                quran_text_array.add(second.get(i));
+                //quran_text_array.add(first.get(i));
+                //quran_text_array.add(second.get(i));
+                quran_text_array.addAll(Collections.singletonList(first.get(i) + second.get(i)));
             }
         }
         cursor.close();
@@ -196,8 +198,9 @@ public class DbBackend extends DbObject {
             } while (cursor.moveToNext());
 
             for(int i = 0; i < first.size(); i++) {
-                quran_text_array.add(first.get(i));
-                quran_text_array.add(second.get(i));
+                //quran_text_array.add(first.get(i));
+                //quran_text_array.add(second.get(i));
+                quran_text_array.addAll(Collections.singletonList(first.get(i) + second.get(i)));
             }
         }
         cursor.close();
@@ -265,10 +268,10 @@ public class DbBackend extends DbObject {
                 first.add(text);
                 second.add(num);
             } while (cursor.moveToNext());
-
             for(int i = 0; i < first.size(); i++) {
-                quran_text_array.add(first.get(i));
-                quran_text_array.add(second.get(i));
+                //quran_text_array.add(first.get(i));
+                //quran_text_array.add(second.get(i));
+                quran_text_array.addAll(Collections.singletonList(first.get(i) + second.get(i)));
             }
         }
         cursor.close();
@@ -290,8 +293,9 @@ public class DbBackend extends DbObject {
             } while (cursor.moveToNext());
 
             for(int i = 0; i < first.size(); i++) {
-                quran_text_array.add(first.get(i));
-                quran_text_array.add(second.get(i));
+                //quran_text_array.add(first.get(i));
+                //quran_text_array.add(second.get(i));
+                quran_text_array.addAll(Collections.singletonList(first.get(i) +""+ second.get(i)));
             }
         }
         cursor.close();

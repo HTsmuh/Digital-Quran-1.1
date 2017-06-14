@@ -54,7 +54,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/para_bottom"
         android:layout_alignParentBottom="true"
-        android:background="#d3233004"
+        android:background="#38500f"
         android:layout_centerInParent="true">
         <Button
             android:layout_width="0dp"
@@ -63,7 +63,7 @@
             android:layout_height="35dp"
             android:background="#00cccccc"
             android:text="BOOKMARK"
-            android:textColor="@color/colorBackground"
+            android:textColor="#FFF"
             android:layout_marginRight="2dp"/>
         <Button
             android:layout_width="0dp"
@@ -72,13 +72,13 @@
             android:layout_height="35dp"
             android:background="#00cccccc"
             android:text="SHOW TRANSLATION"
-            android:textColor="@color/colorBackground"/>
+            android:textColor="#FFF"/>
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/para_translation"
-        android:background="#d3233004"
+        android:background="#38500f"
         android:padding="3dp"
         android:visibility="gone"
         android:layout_alignParentBottom="true"

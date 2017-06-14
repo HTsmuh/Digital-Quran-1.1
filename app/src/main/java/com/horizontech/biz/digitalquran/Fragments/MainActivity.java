@@ -89,6 +89,7 @@ public class MainActivity extends AppCompatActivity {
                 Check_Update();
             }
         }
+        //Toast.makeText(this, ""+db.getEnddate()+currentDate, Toast.LENGTH_SHORT).show();
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -232,43 +233,49 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         if (network.equals("true")) {
-            new AlertDialog.Builder(this)
-                    .setIcon(R.drawable.logo)
-                    .setTitle("Please Rate us")
-                    .setMessage("We need your help to rate this app!")
-                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-
-                            Intent i = new Intent(Intent.ACTION_VIEW);
-                            i.setData(Uri.parse("market://details?id=" + getPackageName()));
-                            startActivity(i);
-                        }
-
-                    })
-                    .setNegativeButton("Not Now", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            finish();
-                        }
-
-                    })
-                    .show();
+            showCloseNow();
         }else{
-            new AlertDialog.Builder(this)
-                    .setIcon(R.drawable.alert)
-                    .setTitle("Closing Application")
-                    .setMessage("Are you sure you want to close this Application?")
-                    .setPositiveButton("Yes", new DialogInterface.OnClickListener()
-                    {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            finish();
-                        }
-
-                    })
-                    .setNegativeButton("No", null)
-                    .show();
+            showCloseNow();
         }
+    }
+    public void showRateNow(){
+        new AlertDialog.Builder(this)
+                .setIcon(R.drawable.logo)
+                .setTitle("Please Rate us")
+                .setMessage("We need your help to rate this app!")
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        Intent i = new Intent(Intent.ACTION_VIEW);
+                        i.setData(Uri.parse("market://details?id=" + getPackageName()));
+                        startActivity(i);
+                    }
+
+                })
+                .setNegativeButton("Not Now", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        finish();
+                    }
+
+                })
+                .show();
+    }
+    public void showCloseNow(){
+        new AlertDialog.Builder(this)
+                .setIcon(R.drawable.alert)
+                .setTitle("Closing Application")
+                .setMessage("Are you sure you want to close this Application?")
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener()
+                {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        finish();
+                    }
+
+                })
+                .setNegativeButton("No", null)
+                .show();
     }
 }

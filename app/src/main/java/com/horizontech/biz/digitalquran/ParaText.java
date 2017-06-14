@@ -123,8 +123,8 @@ public class ParaText extends AppCompatActivity {
         arabic_text = db.Para_Ayat_Text(index);
         translation_text_Eng = db.Para_Translation_Eng(index);
         translation_text_Urdu = db.Para_Translation_Urdu(index);
-        listAdapter_Eng = new TranslationAdapter(this,arabic_text,translation_text_Eng);
-        listAdapter_Urdu = new TranslationAdapter(this,arabic_text,translation_text_Urdu);
+        listAdapter_Eng = new TranslationAdapter(this,Para_text,translation_text_Eng);
+        listAdapter_Urdu = new TranslationAdapter(this,Para_text,translation_text_Urdu);
         quranText.setText(finalize2);
 
         show_translation_btn.setOnClickListener(new View.OnClickListener() {
