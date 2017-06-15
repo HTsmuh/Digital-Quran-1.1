@@ -90,10 +90,10 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         //Toast.makeText(this, ""+db.getEnddate()+currentDate, Toast.LENGTH_SHORT).show();
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
+        final TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
         tabLayout.addTab(tabLayout.newTab().setText("SURAH"));
         tabLayout.addTab(tabLayout.newTab().setText("PARA"));
         tabLayout.addTab(tabLayout.newTab().setText("BOOKMARK"));
@@ -108,23 +108,16 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 viewPager.setCurrentItem(tab.getPosition());
-
             }
-
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
-
             }
-
-
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
-
             }
         });
     }
     private boolean haveNetworkConnection() {
-
         ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo[] netInfo = cm.getAllNetworkInfo();
         for (NetworkInfo ni : netInfo) {

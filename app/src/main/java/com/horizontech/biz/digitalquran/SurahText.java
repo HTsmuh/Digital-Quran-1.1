@@ -56,6 +56,8 @@ public class SurahText extends AppCompatActivity {
     RelativeLayout relativeLayout;
     LinearLayout show_translate;
     LinearLayout hide_translate;
+    int lastViewedPosition ;
+    int topOffset ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -215,4 +217,13 @@ public class SurahText extends AppCompatActivity {
         db.insertINTObookmarkSurah(db.getBookmark_sura_no(),db.bookmarkSurahArabic,db.bookmarkSurahEnglish,scrollY,currentDateandTime);
         Toast.makeText(context, "Bookmarked", Toast.LENGTH_SHORT).show();
     }
+    public void setScroll(){
+        lastViewedPosition = SurahTextList.getFirstVisiblePosition();
+        View v = SurahTextList.getChildAt(0);
+        topOffset = (v == null) ? 0 : v.getTop();
+    }
+    public void getScroll(){
+        SurahTextList.setSelectionFromTop(lastViewedPosition, topOffset);
+    }
+
 }
