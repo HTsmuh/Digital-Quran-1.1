@@ -6,7 +6,7 @@ import com.readystatesoftware.sqliteasset.SQLiteAssetHelper;
 
 public class MySqliteDatabase extends SQLiteAssetHelper {
 
-    private static final String DATABASE_NAMES = "QURAN_v1.1.8";
+    private static final String DATABASE_NAMES = "QURAN_v1.1.10";
     private static final int DATABASE_VERSION = 1;
 
     public MySqliteDatabase(Context context) {

@@ -7,6 +7,7 @@ import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Layout;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -58,7 +59,9 @@ public class ParaText extends AppCompatActivity {
     RelativeLayout relativeLayout;
     LinearLayout show_translate;
     LinearLayout hide_translate;
-
+    int lastViewedPosition ;
+    int topOffset ;
+    int position=0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,11 +83,10 @@ public class ParaText extends AppCompatActivity {
         inflater = getLayoutInflater();
         header = (ViewGroup)inflater.inflate(R.layout.custom_translation_header, ParaTextList , false);
         ParaTextList .addHeaderView(header, null, false);
+        quranText= (TextView) findViewById(R.id.surah_text);
         ParaTextScroll= (ScrollView) findViewById(R.id.paratextscroll);
         bookmark= (Button) findViewById(R.id.bookmark_para);
         setBackgroungImage();
-
-        quranText= (TextView) findViewById(R.id.surah_text);
         if (db.getSize().equals("Small")){
             quranText.setTextSize(15);
         }else if (db.getSize().equals("Normal")){
@@ -109,10 +111,11 @@ public class ParaText extends AppCompatActivity {
         Bundle bundle = intent.getExtras();
         int index1 = bundle.getInt("Para_Number");
         int index2 = bundle.getInt("BookmarkFragment");
+        int position2 = bundle.getInt("ParaScrollPosition");
+        position= position+position2;
         index=index1+index2;
             if (db.getScript().equals("pdms")){
                 Para_text = db.Para_Text_pdms(index);
-
             }else {
                 Para_text = db.Para_Text_me_quran(index);
             }
@@ -127,42 +130,21 @@ public class ParaText extends AppCompatActivity {
         listAdapter_Urdu = new TranslationAdapter(this,Para_text,translation_text_Urdu);
         quranText.setText(finalize2);
 
+        //showTranslation();
+        //Toast.makeText(this, ""+position, Toast.LENGTH_SHORT).show();
+        ParaTextScroll.post(new Runnable() {
+            public void run() {
+                setScrollSpot(position);
+            }
+        });
         show_translation_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(!isTranslate){
                     isTranslate=true;
-                    show_translate.setVisibility(View.GONE);
-                    hide_translate.setVisibility(View.VISIBLE);
-                            quranText.setVisibility(View.INVISIBLE);
-                            ParaTextScroll.setVisibility(View.INVISIBLE);
-                            ParaTextList.setVisibility(View.VISIBLE);
-                                ParaTextList.setAdapter(listAdapter_Urdu);
+                    showTranslation();
                 }
-                hide_translation_btn.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        show_translate.setVisibility(View.VISIBLE);
-                        hide_translate.setVisibility(View.GONE);
-                        isTranslate=false;
-                        quranText.setVisibility(View.VISIBLE);
-                        ParaTextScroll.setVisibility(View.VISIBLE);
-                        //ParaTextScroll.scrollTo(0,1406);
-                        ParaTextList.setVisibility(View.INVISIBLE);
-                    }
-                });
-                urdu_translation_btn.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        ParaTextList.setAdapter(listAdapter_Urdu);
-                    }
-                });
-                english_translation_btn.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        ParaTextList.setAdapter(listAdapter_Eng);
-                    }
-                });
+
             }
         });
         bookmark.setOnClickListener(new View.OnClickListener() {
@@ -178,6 +160,7 @@ public class ParaText extends AppCompatActivity {
             }
         });
     }
+
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
@@ -200,7 +183,6 @@ public class ParaText extends AppCompatActivity {
             relativeLayout.setBackgroundDrawable(portrait);
         }
     }
-
     public void setBookmark() {
         int scrollY = ParaTextScroll.getScrollY();
 
@@ -212,5 +194,45 @@ public class ParaText extends AppCompatActivity {
         db.setBookmark_para_no(index);
         db.insertINTObookmarkpara(db.getBookmark_para_no(),db.bookmarkParaArabic,db.bookmarkParaEnglish,scrollY,currentDateandTime);
         Toast.makeText(context, "Bookmarked", Toast.LENGTH_SHORT).show();
+    }
+    private void setScrollSpot(float spot) {
+        int scroll = (int) spot;
+        ParaTextScroll.scrollTo(0, scroll);
+    }
+    private void showTranslation() {
+        show_translate.setVisibility(View.GONE);
+        hide_translate.setVisibility(View.VISIBLE);
+        quranText.setVisibility(View.INVISIBLE);
+        ParaTextScroll.setVisibility(View.INVISIBLE);
+        ParaTextList.setVisibility(View.VISIBLE);
+        ParaTextList.setAdapter(listAdapter_Urdu);
+        hide_translation_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {hideTranslation(); }
+        });
+        urdu_translation_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) { ParaTextList.setAdapter(listAdapter_Urdu);  }
+        });
+        english_translation_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {ParaTextList.setAdapter(listAdapter_Eng); }
+        });
+    }
+    private void hideTranslation() {
+        show_translate.setVisibility(View.VISIBLE);
+        hide_translate.setVisibility(View.GONE);
+        isTranslate=false;
+        quranText.setVisibility(View.VISIBLE);
+        ParaTextScroll.setVisibility(View.VISIBLE);
+        ParaTextList.setVisibility(View.INVISIBLE);
+    }
+    public void setScroll(){
+        lastViewedPosition = ParaTextList.getFirstVisiblePosition();
+        View v = ParaTextList.getChildAt(0);
+        topOffset = (v == null) ? 0 : v.getTop();
+    }
+    public void getScroll(){
+        ParaTextList.setSelectionFromTop(lastViewedPosition, topOffset);
     }
 }

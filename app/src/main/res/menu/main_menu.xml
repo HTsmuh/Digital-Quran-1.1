@@ -6,10 +6,20 @@
         android:id="@+id/action_settings"
         android:orderInCategory="100"
         android:title="@string/action_settings" />
+    <!--
     <item
         android:id="@+id/action_search"
         android:title="@string/search"
         android:orderInCategory="100"
         android:icon="@drawable/ic_open_search"
         app:showAsAction="ifRoom"/>
+        -->
+    <item
+        android:id="@+id/action_about"
+        android:orderInCategory="100"
+        android:title="@string/action_about_us" />
+    <item
+        android:id="@+id/action_credit"
+        android:orderInCategory="100"
+        android:title="@string/action_credit" />
 </menu>

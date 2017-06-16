@@ -128,8 +128,10 @@ public class BookmarkFragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 int pos=position-1;
                 int index= Integer.parseInt(para_no.get(pos));
+                int scrollPosition=db.getBookmarkParaPosition(pos);
                 Intent intent = new Intent(getActivity(), ParaText.class);
                 intent.putExtra("BookmarkFragment", index);
+                intent.putExtra("ParaScrollPosition", scrollPosition);
                 startActivity(intent);
 
             }
@@ -138,9 +140,11 @@ public class BookmarkFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 int pos=position-1;
-                int index= Integer.parseInt(sura_no.get(pos));
+                int sura_num = Integer.parseInt(sura_no.get(pos));
+                int scrollPosition=db.getBookmarkSurahPosition(pos);
                 Intent intent = new Intent(getActivity(), SurahText.class);
-                intent.putExtra("BookmarkFragment", index);
+                intent.putExtra("BookmarkFragment", sura_num);
+                intent.putExtra("SurahScrollPosition", scrollPosition);
                 startActivity(intent);
             }
         });
@@ -201,10 +205,7 @@ public class BookmarkFragment extends Fragment {
                 public void onClick(View v) {
                     para_items.remove(position);
                     db.deleteBookmarkPara(position);
-                        //Fragment fragment = null;
-                        //fragment = new BookmarkFragment();
-                        //replaceFragment(fragment);
-                        adapter.notifyDataSetChanged();
+                    adapter.notifyDataSetChanged();
                     setDynamicHeight(bookmark_para);
                     Toast.makeText(context, "Bookmark Removed", Toast.LENGTH_SHORT).show();
                 }

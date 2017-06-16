@@ -14,17 +14,19 @@ public class DbBackend extends DbObject {
     private String size;
     private String mode;
     private String script;
-    public String checkupdate;
+    private String checkupdate;
     public String startdate;
     private String enddate;
     private int bookmark_para_no;
     private int bookmark_sura_no;
+    private int BookmarkParaPosition;
+    private int BookmarkSurahPosition;
     public String bookmarkParaArabic;
     public String bookmarkParaEnglish;
-    public int bookmarkParaNumber;
+    private int bookmarkParaNumber;
     public String bookmarkSurahArabic;
     public String bookmarkSurahEnglish;
-    public int bookmarkSurahNumber;
+    private int bookmarkSurahNumber;
     private int para_serial = 1;
     private int surah_serial = 1;
     public DbBackend(Context context) {
@@ -492,11 +494,11 @@ public class DbBackend extends DbObject {
     }
 
     public void insertINTObookmarkpara(int bookmark_para_no,String bookmark_para_arabic,String bookmark_para_roman,int bookmark_scroll,String bookmark_date) {
-        String query = "INSERT INTO bookmark_para (para_no,para_arabic,para_english,aya_no,date) VALUES ('"+bookmark_para_no+"','"+bookmark_para_arabic+"','"+bookmark_para_roman+"','"+bookmark_scroll+"','"+bookmark_date+"')";
+        String query = "INSERT INTO bookmark_para (para_no,para_arabic,para_english,position,date) VALUES ('"+bookmark_para_no+"','"+bookmark_para_arabic+"','"+bookmark_para_roman+"','"+bookmark_scroll+"','"+bookmark_date+"')";
         db.execSQL(query);
     }
     public void insertINTObookmarkSurah(int bookmark_surah_no,String bookmark_surah_arabic,String bookmark_surah_roman,int bookmark_scroll,String bookmark_date) {
-        String query = "INSERT INTO bookmark_sura (sura_no,sura_arabic,sura_english,aya_no,date) VALUES ('"+bookmark_surah_no+"','"+bookmark_surah_arabic+"','"+bookmark_surah_roman+"','"+bookmark_scroll+"','"+bookmark_date+"')";
+        String query = "INSERT INTO bookmark_sura (sura_no,sura_arabic,sura_english,position,date) VALUES ('"+bookmark_surah_no+"','"+bookmark_surah_arabic+"','"+bookmark_surah_roman+"','"+bookmark_scroll+"','"+bookmark_date+"')";
         db.execSQL(query);
     }
     public void deleteBookmarkPara(int index) {
@@ -507,6 +509,31 @@ public class DbBackend extends DbObject {
         String query = "DELETE FROM bookmark_sura WHERE _id in (SELECT _id FROM bookmark_sura LIMIT 1 OFFSET "+index+")";
         db.execSQL(query);
     }
+    public int getBookmarkParaPosition(int index) {
+        String query = "SELECT position FROM bookmark_para ORDER BY _id LIMIT 1 OFFSET "+index;
+        Cursor cursor = this.getDbConnection().rawQuery(query, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                BookmarkParaPosition= cursor.getInt(cursor.getColumnIndexOrThrow("position"));
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        return BookmarkParaPosition;
+    }
+    public int getBookmarkSurahPosition(int index) {
+        String query = "SELECT position FROM bookmark_sura ORDER BY _id LIMIT 1 OFFSET "+index;
+        Cursor cursor = this.getDbConnection().rawQuery(query, null);
+
+        if (cursor.moveToFirst()) {
+            do {
+                BookmarkSurahPosition= cursor.getInt(cursor.getColumnIndexOrThrow("position"));
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        return BookmarkSurahPosition;
+    }
+
     public String[] getBookmarkParaDate() {
         String query = "Select * from bookmark_para";
         Cursor cursor = this.getDbConnection().rawQuery(query, null);
