@@ -7,7 +7,6 @@ import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.Layout;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -58,7 +57,7 @@ public class SurahText extends AppCompatActivity {
     RelativeLayout relativeLayout;
     LinearLayout show_translate;
     LinearLayout hide_translate;
-    int lastViewedPosition ;
+    int lastViewedPosition =0;
     int topOffset ;
     int position=0 ;
     @Override
@@ -113,6 +112,9 @@ public class SurahText extends AppCompatActivity {
         int index1 = bundle.getInt("Surah_Number");
         int index2 = bundle.getInt("BookmarkFragment");
         int position2 = bundle.getInt("SurahScrollPosition");
+        int item2 = bundle.getInt("SurahListItem");
+        boolean check = bundle.getBoolean("checkSurahTranslation");
+        lastViewedPosition=lastViewedPosition+item2;
         position=position+position2;
         index=index1+index2;
         db=new DbBackend(SurahText.this);
@@ -135,11 +137,14 @@ public class SurahText extends AppCompatActivity {
         listAdapter_Urdu = new TranslationAdapter(this,Surah_text,translation_text_Urdu);
         quranText.setText(finalize2);
 
-        //showTranslation();
-        //Toast.makeText(this, ""+position, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, ""+position+","+position2+","+lastViewedPosition+","+item2+","+check, Toast.LENGTH_SHORT).show();
+        if (check == true){
+            showTranslation();
+            setListScroll(lastViewedPosition);
+        }
         SurahTextScroll.post(new Runnable() {
             public void run() {
-                setScrollSpot(position);
+                setTextScroll(position);
             }
         });
         show_translation_btn.setOnClickListener(new View.OnClickListener() {
@@ -189,7 +194,19 @@ public class SurahText extends AppCompatActivity {
         db.insertINTObookmarkSurah(db.getBookmark_sura_no(),db.bookmarkSurahArabic,db.bookmarkSurahEnglish,scrollY,currentDateandTime);
         Toast.makeText(context, "Bookmarked", Toast.LENGTH_SHORT).show();
     }
-    private void setScrollSpot(float spot) {
+    public void setTranslationBookmark(){
+        lastViewedPosition = SurahTextList.getFirstVisiblePosition();
+
+        SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MMM-dd");
+        SimpleDateFormat sdf2 = new SimpleDateFormat("HH:mm:ss");
+        String currentDateandTime1 = sdf1.format(new Date());
+        String currentDateandTime2 = sdf2.format(new Date());
+        String currentDateandTime = " on "+currentDateandTime1+" at "+currentDateandTime2;
+        db.setBookmark_sura_no(index);
+        db.insertINTObookmarkSurahTranslation(db.getBookmark_sura_no(),db.bookmarkSurahArabic,db.bookmarkSurahEnglish+"*",lastViewedPosition,currentDateandTime);
+        Toast.makeText(context, "Bookmarked", Toast.LENGTH_SHORT).show();
+    }
+    private void setTextScroll(float spot) {
         int scroll = (int) spot;
         SurahTextScroll.scrollTo(0, scroll);
     }
@@ -212,16 +229,15 @@ public class SurahText extends AppCompatActivity {
         });
         urdu_translation_btn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) { SurahTextList.setAdapter(listAdapter_Urdu);   }
-        });
+            public void onClick(View v) {setAdapterScroll(); SurahTextList.setAdapter(listAdapter_Urdu); getAdapterScroll(lastViewedPosition);} });
         english_translation_btn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) { SurahTextList.setAdapter(listAdapter_Eng); }
+            public void onClick(View v) {setAdapterScroll(); SurahTextList.setAdapter(listAdapter_Eng);getAdapterScroll(lastViewedPosition); }
         });
         bookmark_icon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setBookmark();
+                setTranslationBookmark();
             }
         });
     }
@@ -233,12 +249,15 @@ public class SurahText extends AppCompatActivity {
         SurahTextScroll.setVisibility(View.VISIBLE);
         SurahTextList.setVisibility(View.INVISIBLE);
     }
-    public void setScroll(){
+    public void setListScroll(int pos){
+        SurahTextList.setSelection(pos);
+    }
+    public void setAdapterScroll(){
         lastViewedPosition = SurahTextList.getFirstVisiblePosition();
         View v = SurahTextList.getChildAt(0);
         topOffset = (v == null) ? 0 : v.getTop();
     }
-    public void getScroll(){
-        SurahTextList.setSelectionFromTop(lastViewedPosition, topOffset);
+    public void getAdapterScroll(int last){
+        SurahTextList.setSelection(last);
     }
 }

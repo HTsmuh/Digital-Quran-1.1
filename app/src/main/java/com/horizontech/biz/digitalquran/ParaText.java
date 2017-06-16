@@ -7,7 +7,6 @@ import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.Layout;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -112,6 +111,9 @@ public class ParaText extends AppCompatActivity {
         int index1 = bundle.getInt("Para_Number");
         int index2 = bundle.getInt("BookmarkFragment");
         int position2 = bundle.getInt("ParaScrollPosition");
+        int item2 = bundle.getInt("ParaListItem");
+        boolean check = bundle.getBoolean("checkParaTranslation");
+        lastViewedPosition=lastViewedPosition+item2;
         position= position+position2;
         index=index1+index2;
             if (db.getScript().equals("pdms")){
@@ -129,12 +131,15 @@ public class ParaText extends AppCompatActivity {
         listAdapter_Eng = new TranslationAdapter(this,Para_text,translation_text_Eng);
         listAdapter_Urdu = new TranslationAdapter(this,Para_text,translation_text_Urdu);
         quranText.setText(finalize2);
-
+        if (check == true){
+            showTranslation();
+            setListScroll(lastViewedPosition);
+        }
         //showTranslation();
         //Toast.makeText(this, ""+position, Toast.LENGTH_SHORT).show();
         ParaTextScroll.post(new Runnable() {
             public void run() {
-                setScrollSpot(position);
+                setTextScroll(position);
             }
         });
         show_translation_btn.setOnClickListener(new View.OnClickListener() {
@@ -153,12 +158,7 @@ public class ParaText extends AppCompatActivity {
                 setBookmark();
             }
         });
-        bookmark_icon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                setBookmark();
-            }
-        });
+
     }
 
     @Override
@@ -195,7 +195,19 @@ public class ParaText extends AppCompatActivity {
         db.insertINTObookmarkpara(db.getBookmark_para_no(),db.bookmarkParaArabic,db.bookmarkParaEnglish,scrollY,currentDateandTime);
         Toast.makeText(context, "Bookmarked", Toast.LENGTH_SHORT).show();
     }
-    private void setScrollSpot(float spot) {
+    public void setTranslationBookmark() {
+        lastViewedPosition = ParaTextList.getFirstVisiblePosition();
+
+        SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MMM-dd");
+        SimpleDateFormat sdf2 = new SimpleDateFormat("HH:mm:ss");
+        String currentDateandTime1 = sdf1.format(new Date());
+        String currentDateandTime2 = sdf2.format(new Date());
+        String currentDateandTime = " on "+currentDateandTime1+" at "+currentDateandTime2;
+        db.setBookmark_para_no(index);
+        db.insertINTObookmarkparaTranslation(db.getBookmark_para_no(),db.bookmarkParaArabic,db.bookmarkParaEnglish+"*",lastViewedPosition,currentDateandTime);
+        Toast.makeText(context, "Bookmarked", Toast.LENGTH_SHORT).show();
+    }
+    private void setTextScroll(float spot) {
         int scroll = (int) spot;
         ParaTextScroll.scrollTo(0, scroll);
     }
@@ -212,11 +224,18 @@ public class ParaText extends AppCompatActivity {
         });
         urdu_translation_btn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) { ParaTextList.setAdapter(listAdapter_Urdu);  }
+            public void onClick(View v) {setAdapterScroll(); ParaTextList.setAdapter(listAdapter_Urdu);getAdapterScroll(lastViewedPosition); }
         });
         english_translation_btn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {ParaTextList.setAdapter(listAdapter_Eng); }
+            public void onClick(View v) {setAdapterScroll();ParaTextList.setAdapter(listAdapter_Eng);getAdapterScroll(lastViewedPosition); }
+        });
+        bookmark_icon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setTranslationBookmark();
+
+            }
         });
     }
     private void hideTranslation() {
@@ -227,12 +246,15 @@ public class ParaText extends AppCompatActivity {
         ParaTextScroll.setVisibility(View.VISIBLE);
         ParaTextList.setVisibility(View.INVISIBLE);
     }
-    public void setScroll(){
+    public void setListScroll(int pos){
+        ParaTextList.setSelection(pos);
+    }
+    public void setAdapterScroll(){
         lastViewedPosition = ParaTextList.getFirstVisiblePosition();
         View v = ParaTextList.getChildAt(0);
         topOffset = (v == null) ? 0 : v.getTop();
     }
-    public void getScroll(){
-        ParaTextList.setSelectionFromTop(lastViewedPosition, topOffset);
+    public void getAdapterScroll(int last){
+        ParaTextList.setSelection(last);
     }
 }

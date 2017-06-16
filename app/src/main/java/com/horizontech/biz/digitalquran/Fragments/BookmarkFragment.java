@@ -50,6 +50,9 @@ public class BookmarkFragment extends Fragment {
     List<String> sura_no;
     ViewGroup para_header;
     ViewGroup surah_header;
+    boolean checkSurahTranslation=false;
+    boolean checkParaTranslation=false;
+    int cnt =0;
     public void checkValidation(){
         if (Arrays.toString(para_serial).equals("[]")&&Arrays.toString(sura_serial).equals("[]")){
             para_header.findViewById(R.id.para_header).setVisibility(View.GONE);
@@ -99,6 +102,7 @@ public class BookmarkFragment extends Fragment {
         surah_header = (ViewGroup) inflater.inflate(R.layout.custom_bookmark_surah_header, bookmark_sura, false);
 
         db = new DbBackend(getContext());
+
         para_date = db.getBookmarkParaDate();
         para_arabic = db.getBookmarkPara_arabic();
         para_english = db.getBookmarkPara_english();
@@ -129,9 +133,23 @@ public class BookmarkFragment extends Fragment {
                 int pos=position-1;
                 int index= Integer.parseInt(para_no.get(pos));
                 int scrollPosition=db.getBookmarkParaPosition(pos);
+                int listItem=db.getBookmarkParaItem(pos);
+                String s =db.getCheckBookmarkPara(pos);
+                char c ='*'; //character c is static...can be modified to accept user input
+
+                for(int i=0;i<s.length();i++)
+                    if(s.charAt(i)==c)
+                        cnt++;
+                if (cnt==0){
+                    checkParaTranslation=false;
+                }else{
+                    checkParaTranslation=true;
+                }
                 Intent intent = new Intent(getActivity(), ParaText.class);
                 intent.putExtra("BookmarkFragment", index);
                 intent.putExtra("ParaScrollPosition", scrollPosition);
+                intent.putExtra("ParaListItem", listItem);
+                intent.putExtra("checkParaTranslation", checkParaTranslation);
                 startActivity(intent);
 
             }
@@ -142,9 +160,23 @@ public class BookmarkFragment extends Fragment {
                 int pos=position-1;
                 int sura_num = Integer.parseInt(sura_no.get(pos));
                 int scrollPosition=db.getBookmarkSurahPosition(pos);
+                int listItem=db.getBookmarkSurahItem(pos);
+                String s =db.getCheckBookmarkSurah(pos);
+                char c ='*'; //character c is static...can be modified to accept user input
+
+                for(int i=0;i<s.length();i++)
+                    if(s.charAt(i)==c)
+                        cnt++;
+                if (cnt==0){
+                    checkSurahTranslation=false;
+                }else{
+                    checkSurahTranslation=true;
+                }
                 Intent intent = new Intent(getActivity(), SurahText.class);
                 intent.putExtra("BookmarkFragment", sura_num);
                 intent.putExtra("SurahScrollPosition", scrollPosition);
+                intent.putExtra("SurahListItem", listItem);
+                intent.putExtra("checkSurahTranslation", checkSurahTranslation);
                 startActivity(intent);
             }
         });
