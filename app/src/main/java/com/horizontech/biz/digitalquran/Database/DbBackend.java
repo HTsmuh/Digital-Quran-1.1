@@ -752,4 +752,34 @@ public class DbBackend extends DbObject {
         bookmark_date = bookmark_date_array.toArray(bookmark_date);
         return bookmark_date;
     }
+    public String[] SurahTranslationSearch() {
+        String query = "Select * from en_kanzuliman";
+        Cursor cursor = this.getDbConnection().rawQuery(query, null);
+        ArrayList<String> translation_text_array = new ArrayList<>();
+        if (cursor.moveToFirst()) {
+            do {
+                String translation_text = cursor.getString(cursor.getColumnIndexOrThrow("text"));
+                translation_text_array.add(translation_text);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        String[] translation_array = new String[translation_text_array.size()];
+        translation_array = translation_text_array.toArray(translation_array);
+        return translation_array;
+    }/*
+    public String[] SurahTranslationSearch(String someTxt) {
+        String query = "Select * from en_kanzuliman where text like '%"+someTxt+"%'";
+        Cursor cursor = this.getDbConnection().rawQuery(query, null);
+        ArrayList<String> translation_text_array = new ArrayList<>();
+        if (cursor.moveToFirst()) {
+            do {
+                String translation_text = cursor.getString(cursor.getColumnIndexOrThrow("text"));
+                translation_text_array.add(translation_text);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        String[] translation_array = new String[translation_text_array.size()];
+        translation_array = translation_text_array.toArray(translation_array);
+        return translation_array;
+    }*/
 }

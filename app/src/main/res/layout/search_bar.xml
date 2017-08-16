@@ -7,9 +7,12 @@
 
     <EditText
         android:id="@+id/edtSearch"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:elevation="6dp"
+        android:minHeight="?attr/actionBarSize"
         android:hint="Search here"
+        android:padding="10dp"
         android:background="@android:color/transparent"
         android:inputType="text"
         android:imeOptions="actionSearch" />

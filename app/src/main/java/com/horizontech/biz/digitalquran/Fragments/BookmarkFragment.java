@@ -270,7 +270,6 @@ public class BookmarkFragment extends Fragment {
             this.adapter=this;
             tf = Typeface.createFromAsset(context.getAssets(), "fonts/pdms.ttf");
         }
-
         @NonNull
         @Override
         public View getView(final int position, @Nullable final View convertView, @NonNull ViewGroup parent) {

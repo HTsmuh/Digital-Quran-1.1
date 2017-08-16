@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.horizontech.biz.digitalquran.Adapter.ParaNameAdapter;
 import com.horizontech.biz.digitalquran.Database.DbBackend;
@@ -35,7 +34,7 @@ public class ParaFragment extends Fragment {
         // Inflate the layout for this fragment
         View myView=inflater.inflate(R.layout.fragment_para, container, false);
 
-        itemList = (ListView)myView.findViewById(R.id.listView);
+        itemList = (ListView)myView.findViewById(R.id.Para_listView);
         DbBackend dbFragment=new DbBackend(getContext());
 
         String[] para_numbers = dbFragment.para_No();

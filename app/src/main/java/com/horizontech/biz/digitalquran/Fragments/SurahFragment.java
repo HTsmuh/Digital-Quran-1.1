@@ -32,7 +32,7 @@ public class SurahFragment extends Fragment {
                              Bundle savedInstanceState) {
         View myView=inflater.inflate(R.layout.fragment_surah, container, false);
 
-        itemList = (ListView)myView.findViewById(R.id.listView);
+        itemList = (ListView)myView.findViewById(R.id.Surah_listView);
         DbBackend dbFragment=new DbBackend(getContext());
 
         String[] surah_numbers = dbFragment.surah_No();
