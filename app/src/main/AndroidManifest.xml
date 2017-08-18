@@ -42,7 +42,7 @@
             android:label="About Us"
             android:theme="@style/MyAppTheme" />
         <activity android:name=".SearchResult"
-            android:label=""
+            android:label="Search Result"
             android:theme="@style/MyAppTheme"/>
     </application>
 

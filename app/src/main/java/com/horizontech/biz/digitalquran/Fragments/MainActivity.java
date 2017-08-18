@@ -29,6 +29,7 @@ import com.horizontech.biz.digitalquran.Adapter.PagerAdapter;
 import com.horizontech.biz.digitalquran.Database.DbBackend;
 import com.horizontech.biz.digitalquran.Menu.AboutUsActivity;
 import com.horizontech.biz.digitalquran.Menu.CreditsActivity;
+import com.horizontech.biz.digitalquran.ParaText;
 import com.horizontech.biz.digitalquran.R;
 import com.horizontech.biz.digitalquran.Menu.SettingActivity;
 import com.horizontech.biz.digitalquran.SearchResult;
@@ -46,12 +47,14 @@ import java.util.concurrent.ExecutionException;
 public class MainActivity extends AppCompatActivity {
     boolean haveConnectedWifi = false;
     boolean haveConnectedMobile = false;
-    String network;
     String latestVersion;
+    String network;
     Date currentDate;
     Date intervalDate;
     ViewPager viewPager;
-    MenuItem mSearchAction;
+    private MenuItem mSearchAction;
+    private boolean isSearchOpened = false;
+    private EditText edtSearch;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -125,9 +128,9 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-    /*public void select3rdTab(){
+    public void select3rdTab(){
         viewPager.setCurrentItem(2);
-    }*/
+    }
     private boolean haveNetworkConnection() {
         ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo[] netInfo = cm.getAllNetworkInfo();
@@ -179,12 +182,14 @@ public class MainActivity extends AppCompatActivity {
                         dialog.dismiss();
                     }
                 });
+
                 builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         //Cancel button action
                     }
                 });
+
                 builder.setCancelable(false);
                 builder.show();
             }
@@ -203,6 +208,7 @@ public class MainActivity extends AppCompatActivity {
                 String urlOfAppFromPlayStore = "https://play.google.com/store/apps/details?id=" + getPackageName();
                 Document doc = Jsoup.connect(urlOfAppFromPlayStore).get();
                 latestVersion = doc.getElementsByAttributeValue("itemprop","softwareVersion").first().text();
+
             }catch (Exception e){
                 e.printStackTrace();
             }
@@ -214,6 +220,7 @@ public class MainActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.main_menu, menu);
         return true;
     }
+
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
         mSearchAction = menu.findItem(R.id.action_search);
@@ -232,8 +239,7 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(this, AboutUsActivity.class);
             startActivity(intent);
         }else  if (id == R.id.action_search) {
-            Intent intent=new Intent(MainActivity.this,SearchResult.class);
-            startActivity(intent);
+            handleMenuSearch();
         }
         return super.onOptionsItemSelected(item);
     }
@@ -244,8 +250,8 @@ public class MainActivity extends AppCompatActivity {
         }else{
             showCloseNow();
         }
-    }
-    /*public void showRateNow(){
+    }/*
+    public void showRateNow(){
         new AlertDialog.Builder(this)
                 .setIcon(R.drawable.logo)
                 .setTitle("Please Rate us")
@@ -284,5 +290,65 @@ public class MainActivity extends AppCompatActivity {
                 })
                 .setNegativeButton("No", null)
                 .show();
+    }
+
+
+    protected void handleMenuSearch(){
+        ActionBar action = getSupportActionBar(); //get the actionbar
+
+        if(isSearchOpened){ //test if the search is open
+
+            action.setDisplayShowCustomEnabled(false); //disable a custom view inside the actionbar
+            action.setDisplayShowTitleEnabled(true); //show the title in the action bar
+
+            //hides the keyboard
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(edtSearch.getWindowToken(), 0);
+
+            //add the search icon in the action bar
+            mSearchAction.setIcon(getResources().getDrawable(R.drawable.ic_open_search));
+
+            isSearchOpened = false;
+        } else { //open the search entry
+
+            action.setDisplayShowCustomEnabled(true); //enable it to display a
+            // custom view in the action bar.
+            action.setCustomView(R.layout.search_bar);//add the custom view
+            action.setDisplayShowTitleEnabled(false); //hide the title
+
+            edtSearch = (EditText)action.getCustomView().findViewById(R.id.edtSearch); //the text editor
+
+            //this is a listener to do a search when the user clicks on search button
+            edtSearch.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+                @Override
+                public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                    if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                        doSearch();
+                        return true;
+                    }
+                    return false;
+                }
+            });
+
+
+            edtSearch.requestFocus();
+
+            //open the keyboard focused in the edtSearch
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.showSoftInput(edtSearch, InputMethodManager.SHOW_IMPLICIT);
+
+
+            //add the close icon
+            mSearchAction.setIcon(getResources().getDrawable(R.drawable.ic_close_search));
+
+            isSearchOpened = true;
+        }
+    }
+
+    private void doSearch() {
+        Intent intent=new Intent(MainActivity.this, SearchResult.class);
+        String keyword= edtSearch.getText().toString();
+        intent.putExtra("Search_Keyword", keyword);
+        startActivity(intent);
     }
 }

@@ -752,8 +752,8 @@ public class DbBackend extends DbObject {
         bookmark_date = bookmark_date_array.toArray(bookmark_date);
         return bookmark_date;
     }
-    public String[] SurahTranslationSearch() {
-        String query = "Select * from en_kanzuliman";
+    public String[] SearchText(String someTxt) {
+        String query = "SELECT text FROM en_kanzuliman WHERE text like '%"+someTxt+"%' UNION ALL SELECT text FROM ur_kanzuliman WHERE text like '%"+someTxt+"%'";
         Cursor cursor = this.getDbConnection().rawQuery(query, null);
         ArrayList<String> translation_text_array = new ArrayList<>();
         if (cursor.moveToFirst()) {
@@ -766,14 +766,14 @@ public class DbBackend extends DbObject {
         String[] translation_array = new String[translation_text_array.size()];
         translation_array = translation_text_array.toArray(translation_array);
         return translation_array;
-    }/*
-    public String[] SurahTranslationSearch(String someTxt) {
-        String query = "Select * from en_kanzuliman where text like '%"+someTxt+"%'";
+    }
+    public String[] SearchAyatNo(String someTxt) {
+        String query = "SELECT aya FROM en_kanzuliman WHERE text like '%"+someTxt+"%' UNION ALL SELECT aya FROM ur_kanzuliman WHERE text like '%"+someTxt+"%'";
         Cursor cursor = this.getDbConnection().rawQuery(query, null);
         ArrayList<String> translation_text_array = new ArrayList<>();
         if (cursor.moveToFirst()) {
             do {
-                String translation_text = cursor.getString(cursor.getColumnIndexOrThrow("text"));
+                String translation_text = cursor.getString(cursor.getColumnIndexOrThrow("aya"));
                 translation_text_array.add(translation_text);
             } while (cursor.moveToNext());
         }
@@ -781,5 +781,49 @@ public class DbBackend extends DbObject {
         String[] translation_array = new String[translation_text_array.size()];
         translation_array = translation_text_array.toArray(translation_array);
         return translation_array;
-    }*/
+    }
+    public String[] SearchSurahNo(String someTxt) {
+        String query = "SELECT sura FROM en_kanzuliman WHERE text like '%"+someTxt+"%' UNION ALL SELECT sura FROM ur_kanzuliman WHERE text like '%"+someTxt+"%'";
+        Cursor cursor = this.getDbConnection().rawQuery(query, null);
+        ArrayList<String> translation_text_array = new ArrayList<>();
+        if (cursor.moveToFirst()) {
+            do {
+                String translation_text = cursor.getString(cursor.getColumnIndexOrThrow("sura"));
+                translation_text_array.add(translation_text);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        String[] translation_array = new String[translation_text_array.size()];
+        translation_array = translation_text_array.toArray(translation_array);
+        return translation_array;
+    }
+    public String[] SearchSurahName(String someTxt) {
+        String query = "SELECT sura FROM en_kanzuliman WHERE text like '%"+someTxt+"%' UNION ALL SELECT sura FROM ur_kanzuliman WHERE text like '%"+someTxt+"%'";
+        Cursor cursor = this.getDbConnection().rawQuery(query, null);
+        ArrayList<String> translation_text_array = new ArrayList<>();
+        if (cursor.moveToFirst()) {
+            do {
+                String translation_text = cursor.getString(cursor.getColumnIndexOrThrow("sura"));
+                String surah_name=SearchSurahNme(translation_text);
+                translation_text_array.add(surah_name);
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        String[] translation_array = new String[translation_text_array.size()];
+        translation_array = translation_text_array.toArray(translation_array);
+        return translation_array;
+    }
+
+    public String SearchSurahNme(String index) {
+        String query = "SELECT roman FROM Surah_Names where _id="+index;
+        String SearchSurahname = null;
+        Cursor cursor = this.getDbConnection().rawQuery(query, null);
+        if (cursor.moveToFirst()) {
+            do {
+                SearchSurahname = cursor.getString(cursor.getColumnIndexOrThrow("roman"));
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        return SearchSurahname;
+    }
 }
