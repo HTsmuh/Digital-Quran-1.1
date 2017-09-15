@@ -23,8 +23,8 @@ public class SurahNameAdapter extends ArrayAdapter<String> {
     public String[] surah_roman_array;
     public String[] surah_verse_array;
     public int[] surah_type_images;
-    String abc="Total Verses : ";
-    Typeface tf;
+    private String abc="Total Verses : ";
+    private Typeface tf;
 
     public SurahNameAdapter(Context context, String[] surah_no, String[] surah_arabic, String[] surah_roman,String[] surah_verse, int[] surah_type) {
         super(context, R.layout.custom_single_row,R.id.translationUrduText,surah_arabic);

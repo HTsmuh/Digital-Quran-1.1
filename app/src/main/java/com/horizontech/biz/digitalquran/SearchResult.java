@@ -50,9 +50,3 @@ public class SearchResult extends AppCompatActivity {
         });
     }
 }
-/*
-
-    String[] terms = {"111","222","333","444","555","666","777",};
-
-    ArrayAdapter<String> listAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, android.R.id.text1, terms);
-    listView.setAdapter(listAdapter);*/
